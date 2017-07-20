@@ -1,0 +1,983 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="1、距离传感器    // 1.开启距离传感器(注意: 默认情况距离传感器是关闭的) //    [UIApplication sharedApplication].proximitySensingEnabled = YES;     // 只要开启之后, 就开始实时监听     [UIDevice currentDevice].proximityMonitoringEnabled = YES;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="距离传感器、加速计和蓝牙">
+<meta property="og:url" content="http://yoursite.com/2017/07/12/距离传感器、加速计和蓝牙/index.html">
+<meta property="og:site_name" content="王凯彬">
+<meta property="og:description" content="1、距离传感器    // 1.开启距离传感器(注意: 默认情况距离传感器是关闭的) //    [UIApplication sharedApplication].proximitySensingEnabled = YES;     // 只要开启之后, 就开始实时监听     [UIDevice currentDevice].proximityMonitoringEnabled = YES;">
+<meta property="og:image" content="http://yoursite.com/2017/07/12/images/distance_transducer.png">
+<meta property="og:image" content="http://yoursite.com/2017/07/12/images/iphone_coordinate_system.png">
+<meta property="og:updated_time" content="2017-07-12T12:23:21.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="距离传感器、加速计和蓝牙">
+<meta name="twitter:description" content="1、距离传感器    // 1.开启距离传感器(注意: 默认情况距离传感器是关闭的) //    [UIApplication sharedApplication].proximitySensingEnabled = YES;     // 只要开启之后, 就开始实时监听     [UIDevice currentDevice].proximityMonitoringEnabled = YES;">
+<meta name="twitter:image" content="http://yoursite.com/2017/07/12/images/distance_transducer.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"always","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/07/12/距离传感器、加速计和蓝牙/"/>
+
+
+
+
+
+  <title> 距离传感器、加速计和蓝牙 | 王凯彬 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?931533eabc03369078b34713fefd96d2";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">王凯彬</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">个人技术博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/12/距离传感器、加速计和蓝牙/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="王凯彬">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1497022439403&di=2f6fd5230ee9981e7eddc6cf7e9318ea&imgtype=0&src=http%3A%2F%2Fwww.leewiart.com%2Fuserfiles%2F27314%2F65bf4cc7b5b64ea29e30516680b3dc41_thumb_250.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="王凯彬">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                距离传感器、加速计和蓝牙
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-12T20:00:31+08:00">
+                2017-07-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="1、距离传感器"><a href="#1、距离传感器" class="headerlink" title="1、距离传感器"></a>1、距离传感器</h4><p><img src="../images/distance_transducer.png" alt="">  </p>
+<pre><code class="objectivec"> <span class="comment">// 1.开启距离传感器(注意: 默认情况距离传感器是关闭的)</span>
+<span class="comment">//    [UIApplication sharedApplication].proximitySensingEnabled = YES;</span>
+    <span class="comment">// 只要开启之后, 就开始实时监听</span>
+    [<span class="built_in">UIDevice</span> currentDevice].proximityMonitoringEnabled = <span class="literal">YES</span>;
+
+    <span class="comment">// 2.当监听到有物体靠近设备时系统会发出通知</span>
+    [[<span class="built_in">NSNotificationCenter</span> defaultCenter] addObserver:<span class="keyword">self</span> selector:<span class="keyword">@selector</span>(proximityStateDidChange:) name:<span class="built_in">UIDeviceProximityStateDidChangeNotification</span> object:<span class="literal">nil</span>];
+
+
+<span class="comment">// 当监听到有物体靠近设备时调用 </span>
+- (<span class="keyword">void</span>)proximityStateDidChange:(<span class="built_in">NSNotification</span> *)note
+{
+<span class="comment">//    NSLog(@"%@", note);</span>
+   <span class="keyword">if</span>( [<span class="built_in">UIDevice</span> currentDevice].proximityState)
+   {
+       <span class="built_in">NSLog</span>(<span class="string">@"有物体靠近"</span>);
+   }<span class="keyword">else</span>
+   {
+       <span class="built_in">NSLog</span>(<span class="string">@"物体离开"</span>);
+   }
+}
+</code></pre>
+<h4 id="2、加速计-CoreMotion"><a href="#2、加速计-CoreMotion" class="headerlink" title="2、加速计 CoreMotion"></a>2、加速计 CoreMotion</h4><h5 id="加速计的经典应用场景"><a href="#加速计的经典应用场景" class="headerlink" title="加速计的经典应用场景"></a>加速计的经典应用场景</h5><ul>
+<li>摇一摇  </li>
+<li>计步器</li>
+</ul>
+<p><strong>方法1 push （一直在采集）</strong></p>
+<pre><code class="objectivec">- (<span class="keyword">void</span>)push
+{
+    <span class="comment">// 1.创建coreMotion管理者</span>
+    <span class="comment">//    CMMotionManager *mgr = [[CMMotionManager alloc] init];</span>
+    <span class="keyword">self</span>.mgr = [[<span class="built_in">CMMotionManager</span> alloc] init];
+
+    <span class="comment">// 2.判断加速计是否可用</span>
+    <span class="keyword">if</span> (<span class="keyword">self</span>.mgr.isAccelerometerAvailable) {
+        <span class="comment">/*
+         isAccelerometerActive 是否正在采集
+         accelerometerData 采集到得数据
+         startAccelerometerUpdates  pull
+         startAccelerometerUpdatesToQueue  push
+         stopAccelerometerUpdates 停止采集
+         accelerometerUpdateInterval 采样时间
+         */</span>
+        <span class="comment">// 3.设置采样时间</span>
+        <span class="keyword">self</span>.mgr.accelerometerUpdateInterval = <span class="number">1</span> / <span class="number">30.0</span>;
+        <span class="comment">// 4.开始采样</span>
+
+        [<span class="keyword">self</span>.mgr startAccelerometerUpdatesToQueue:[<span class="built_in">NSOperationQueue</span> mainQueue] withHandler:^(<span class="built_in">CMAccelerometerData</span> *accelerometerData, <span class="built_in">NSError</span> *error) {
+            <span class="comment">// 这个block是采集到数据时就会调用</span>
+            <span class="keyword">if</span> (error) <span class="keyword">return</span> ;
+            <span class="built_in">CMAcceleration</span> acceleration = accelerometerData.acceleration;
+            <span class="built_in">NSLog</span>(<span class="string">@"x = %f y = %f z = %f"</span>, acceleration.x, acceleration.y , acceleration.z);
+        }];
+    }<span class="keyword">else</span>
+    {
+        <span class="built_in">NSLog</span>(<span class="string">@"加速计不可用"</span>);
+    }
+}
+</code></pre>
+<p><strong>方法2 pull （需要时才采集）</strong></p>
+<pre><code class="objectivec"><span class="comment">// 1.创建coreMotion管理者</span>
+    <span class="keyword">self</span>.mgr = [[<span class="built_in">CMMotionManager</span> alloc] init];
+
+     <span class="keyword">if</span> (<span class="keyword">self</span>.mgr.isAccelerometerAvailable) {
+          <span class="comment">// 3.开始采样</span>
+         [<span class="keyword">self</span>.mgr startAccelerometerUpdates]; <span class="comment">// pull</span>
+     }<span class="keyword">else</span>
+     {
+         <span class="built_in">NSLog</span>(<span class="string">@"加速计不可用"</span>);
+     }
+
+- (<span class="keyword">void</span>)touchesBegan:(<span class="built_in">NSSet</span> *)touches withEvent:(<span class="built_in">UIEvent</span> *)event
+{
+    <span class="built_in">CMAcceleration</span> acceleration = <span class="keyword">self</span>.mgr.accelerometerData.acceleration;
+
+     <span class="built_in">NSLog</span>(<span class="string">@"x = %f y = %f z = %f"</span>, acceleration.x, acceleration.y , acceleration.z);
+}
+</code></pre>
+<h4 id="3、蓝牙"><a href="#3、蓝牙" class="headerlink" title="3、蓝牙"></a>3、蓝牙</h4><h5 id="iOS中提供了4个框架用于实现蓝牙连接"><a href="#iOS中提供了4个框架用于实现蓝牙连接" class="headerlink" title="iOS中提供了4个框架用于实现蓝牙连接"></a>iOS中提供了4个框架用于实现蓝牙连接</h5><p><strong>1、GameKit.framework（用法简单）</strong>  </p>
+<ul>
+<li>只能用于iOS设备之间的连接，多用于游戏（比如五子棋对战），从iOS7开始过期(仅限于沙盒)  </li>
+<li>只能用于iOS设备之间的连接  </li>
+<li>只能用于同一个应用程序之间的连接  </li>
+<li>最好别利用蓝牙发送比较大的数据  </li>
+</ul>
+<pre><code class="objectivec">- (<span class="keyword">IBAction</span>)connect {
+
+    <span class="comment">// 1.创建选择其他蓝牙设备的控制器</span>
+    GKPeerPickerController *peerPk = [[GKPeerPickerController alloc] init];
+    <span class="comment">// 2.成为该控制器的代理</span>
+    peerPk.delegate = <span class="keyword">self</span>;
+    <span class="comment">// 3.显示蓝牙控制器</span>
+    [peerPk show];
+}
+
+<span class="meta">#pragma mark - GKPeerPickerControllerDelegate</span>
+<span class="comment">// 4.实现dialing方法</span>
+<span class="comment">/**
+ *  当蓝牙设备连接成功就会调用
+ *
+ *  @param picker  触发时间的控制器
+ *  @param peerID  连接蓝牙设备的ID
+ *  @param session 连接蓝牙的会话(可用通讯), 以后只要拿到session就可以传输数据
+ */</span>
+- (<span class="keyword">void</span>)peerPickerController:(GKPeerPickerController *)picker didConnectPeer:(<span class="built_in">NSString</span> *)peerID toSession:(GKSession *)session
+{
+    <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, peerID);
+    <span class="comment">// 1.保存会话</span>
+    <span class="keyword">self</span>.session = session;
+
+    <span class="comment">// 2.设置监听接收传递过来的数据</span>
+    <span class="comment">/*
+     Handler: 谁来处理接收到得数据
+     withContext: 传递数据
+     */</span>
+    [<span class="keyword">self</span>.session setDataReceiveHandler:<span class="keyword">self</span> withContext:<span class="literal">nil</span>];
+
+
+    <span class="comment">// 2.关闭显示蓝牙设备控制器</span>
+    [picker dismiss];
+}
+<span class="comment">/**
+ *  接收到其它设备传递过来的数据就会调用
+ *
+ *  @param data    传递过来的数据
+ *  @param peer    传递数据设备的ID
+ *  @param session 会话
+ *  @param context 注册监听时传递的数据
+ */</span>
+- (<span class="keyword">void</span>) receiveData:(<span class="built_in">NSData</span> *)data fromPeer:(<span class="built_in">NSString</span> *)peer inSession: (GKSession *)session context:(<span class="keyword">void</span> *)context
+{
+<span class="comment">//    NSLog(@"%s", __func__);</span>
+    <span class="comment">// 1.将传递过来的数据转换为图片(注意: 因为发送的时图片, 所以才需要转换为图片)</span>
+    <span class="built_in">UIImage</span> *image = [<span class="built_in">UIImage</span> imageWithData:data];
+    <span class="keyword">self</span>.customIV.image = image;
+}
+
+- (<span class="keyword">void</span>)peerPickerControllerDidCancel:(GKPeerPickerController *)picker
+{
+
+}
+
+ <span class="meta">#pragma mark —- 发送数据</span>
+- (<span class="keyword">IBAction</span>)send {
+    <span class="comment">// 利用session发送图片数据即可</span>
+    <span class="comment">// 1.取出customImageView上得图片, 转换为二进制</span>
+    <span class="built_in">UIImage</span> *image =  <span class="keyword">self</span>.customIV.image;
+    <span class="built_in">NSData</span> *data = <span class="built_in">UIImagePNGRepresentation</span>(image);
+
+    <span class="comment">/*
+     GKSendDataReliable, 数据安全的发送模式, 慢
+     GKSendDataUnreliable, 数据不安全的发送模式, 快
+     */</span>
+
+    <span class="comment">/*
+     data: 需要发送的数据
+     DataReliable: 是否安全的发送数据(发送数据的模式)
+     error: 是否监听发送错误
+     */</span>
+    [<span class="keyword">self</span>.session sendDataToAllPeers:data withDataMode:GKSendDataReliable error:<span class="literal">nil</span>];
+}
+</code></pre>
+<p><strong>2、MultipeerConnectivity.framework</strong><br>只能用于iOS设备之间的连接，从iOS7开始引入，主要用于文件共享（仅限于沙盒的文件）用法跟GameKit类似  </p>
+<p><strong>3、ExternalAccessory.framework</strong><br>可用于第三方蓝牙设备交互，但是蓝牙设备必须经过苹果MFi认证（国内较少）  </p>
+<p><strong>4、CoreBluetooth.framework（时下热门）</strong>            </p>
+<ul>
+<li>可用于第三方蓝牙设备交互，必须要支持蓝牙4.0  </li>
+<li>硬件至少是4s，系统至少是iOS6  </li>
+<li>蓝牙4.0以低功耗著称，一般也叫BLE（Bluetooth Low Energy）  </li>
+<li>目前应用比较多的案例：运动手坏、嵌入式设备、智能家居  </li>
+</ul>
+<p>每个蓝牙4.0设备都是通过服务（Service）和特征（Characteristic）来展示自己的<br>一个设备必然包含一个或多个服务，每个服务下面又包含若干个特征<br>特征是与外界交互的最小单位<br>比如说，一台蓝牙4.0设备，用特征A来描述自己的出厂信息，用特征B来收发数据<br>服务和特征都是用UUID来唯一标识的，通过UUID就能区别不同的服务和特征<br>设备里面各个服务(service)和特征(characteristic)的功能，均由蓝牙设备硬件厂商提供，比如哪些是用来交互(读写)，哪些可获取模块信息(只读)等 </p>
+<p><strong>Core Bluetooth的开发步骤：</strong>  </p>
+<ol>
+<li>建立中心设备  </li>
+<li>扫描外设（Discover Peripheral）  </li>
+<li>连接外设(Connect Peripheral)  </li>
+<li>扫描外设中的服务和特征(Discover Services And Characteristics)  </li>
+<li>利用特征与外设做数据交互(Explore And Interact)<br>断开连接(Disconnect)</li>
+</ol>
+<pre><code class="objectivec"><span class="meta">#import <span class="meta-string">"ViewController.h"</span></span>
+<span class="meta">#import <span class="meta-string">&lt;CoreBluetooth/CoreBluetooth.h&gt;</span></span>
+
+<span class="class"><span class="keyword">@interface</span> <span class="title">ViewController</span> ()&lt;<span class="title">CBCentralManagerDelegate</span>, <span class="title">CBPeripheralDelegate</span>&gt;</span>
+<span class="comment">/**
+ *  外设
+ */</span>
+<span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">NSMutableArray</span> *peripherals;
+<span class="comment">/**
+ *  中心管理者
+ */</span>
+<span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) CBCentralManager *mgr;
+<span class="keyword">@end</span>
+
+<span class="class"><span class="keyword">@implementation</span> <span class="title">ViewController</span></span>
+
+- (<span class="built_in">NSMutableArray</span> *)peripherals
+{
+    <span class="keyword">if</span> (!_peripherals) {
+        _peripherals = [<span class="built_in">NSMutableArray</span> array];
+    }
+    <span class="keyword">return</span> _peripherals;
+}
+
+- (<span class="keyword">void</span>)viewDidLoad {
+    [<span class="keyword">super</span> viewDidLoad];
+    <span class="comment">// Do any additional setup after loading the view, typically from a nib.</span>
+
+    <span class="comment">// 1.创建中心设备</span>
+    CBCentralManager *mgr = [[CBCentralManager alloc] init];
+    <span class="keyword">self</span>.mgr = mgr;
+
+
+    <span class="comment">// 设置代理</span>
+    mgr.delegate = <span class="keyword">self</span>;
+
+    <span class="comment">// 2.利用中心设备扫描外部设备</span>
+    <span class="comment">/*
+     如果指定数组代表只扫描指定的设备
+     */</span>
+    [mgr scanForPeripheralsWithServices:<span class="literal">nil</span> options:<span class="literal">nil</span>];
+}
+<span class="meta">#pragma mark - CBCentralManagerDelegate</span>
+- (<span class="keyword">void</span>)centralManager:(CBCentralManager *)central didDiscoverPeripheral:(CBPeripheral *)peripheral advertisementData:(<span class="built_in">NSDictionary</span> *)advertisementData RSSI:(<span class="built_in">NSNumber</span> *)RSSI
+{
+
+    <span class="comment">// 保存扫描到得外部设备</span>
+    <span class="comment">// 判断如果数组中不包含当前扫描到得外部设置才保存</span>
+    <span class="keyword">if</span> (![<span class="keyword">self</span>.peripherals containsObject:peripheral]) {
+
+        peripheral.delegate = <span class="keyword">self</span>;
+        [<span class="keyword">self</span>.peripherals addObject:peripheral];
+    }
+}
+
+<span class="comment">/**
+ *  模拟点击, 然后连接所有的外设
+ */</span>
+- (<span class="keyword">void</span>)start
+{
+    <span class="keyword">for</span> (CBPeripheral *peripheral <span class="keyword">in</span> <span class="keyword">self</span>.peripherals) {
+        <span class="comment">/**
+         *  连接外设
+         */</span>
+        [<span class="keyword">self</span>.mgr connectPeripheral:peripheral options:<span class="literal">nil</span>];
+    }
+}
+<span class="comment">/**
+ *  连接外设成功调用
+ */</span>
+- (<span class="keyword">void</span>)centralManager:(CBCentralManager *)central didConnectPeripheral:(CBPeripheral *)peripheral
+{
+    <span class="comment">// 扫描外设中得服务</span>
+    [peripheral discoverServices:<span class="literal">nil</span>];
+}
+<span class="comment">/**
+ *  连接外设失败调用
+ */</span>
+- (<span class="keyword">void</span>)centralManager:(CBCentralManager *)central didDisconnectPeripheral:(CBPeripheral *)peripheral error:(<span class="built_in">NSError</span> *)error
+{
+
+}
+
+<span class="meta">#pragma makr - CBPeripheralDelegate</span>
+<span class="comment">/**
+ *  只要扫描到服务就会调用
+ *
+ *  @param peripheral 服务所在的外设
+ */</span>
+- (<span class="keyword">void</span>)peripheral:(CBPeripheral *)peripheral didDiscoverServices:(<span class="built_in">NSError</span> *)error
+{
+
+    <span class="comment">// 获取外设中所有扫描到得服务</span>
+    <span class="built_in">NSArray</span> *services = peripheral.services;
+    <span class="keyword">for</span> (CBService *service <span class="keyword">in</span> services) {
+        <span class="comment">// 拿到需要的服务</span>
+        <span class="keyword">if</span> ([service.UUID.UUIDString isEqualToString:<span class="string">@"123"</span>])
+        {
+            <span class="comment">// 从需要的服务中查找需要的特征</span>
+            <span class="comment">// 从peripheral中得service中扫描特征</span>
+            [peripheral discoverCharacteristics:<span class="literal">nil</span> forService:service];
+        }
+    }
+}
+
+<span class="comment">/**
+ *  只要扫描到特征就会调用
+ *
+ *  @param peripheral 特征所属的外设
+ *  @param service    特征所属的服务
+ */</span>
+- (<span class="keyword">void</span>)peripheral:(CBPeripheral *)peripheral didDiscoverCharacteristicsForService:(CBService *)service error:(<span class="built_in">NSError</span> *)error
+{
+
+    <span class="comment">// 拿到服务中所有的特征</span>
+    <span class="built_in">NSArray</span> *characteristics =  service.characteristics;
+    <span class="comment">// 遍历特征, 拿到需要的特征处理</span>
+    <span class="keyword">for</span> (CBCharacteristic * characteristic <span class="keyword">in</span> characteristics) {
+        <span class="keyword">if</span> ([characteristic.UUID.UUIDString isEqualToString:<span class="string">@"8888"</span>]) {
+            <span class="built_in">NSLog</span>(<span class="string">@"设置闹钟"</span>);
+
+        }
+    }
+}
+</code></pre>
+<h4 id="4、陀螺仪与方向感应器"><a href="#4、陀螺仪与方向感应器" class="headerlink" title="4、陀螺仪与方向感应器"></a>4、陀螺仪与方向感应器</h4><p><img src="../images/iphone_coordinate_system.png" alt=""></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/12/正则表达式/" rel="next" title="正则表达式">
+                <i class="fa fa-chevron-left"></i> 正则表达式
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/07/20/画虚线/" rel="prev" title="画虚线">
+                画虚线 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1497022439403&di=2f6fd5230ee9981e7eddc6cf7e9318ea&imgtype=0&src=http%3A%2F%2Fwww.leewiart.com%2Fuserfiles%2F27314%2F65bf4cc7b5b64ea29e30516680b3dc41_thumb_250.jpg"
+               alt="王凯彬" />
+          <p class="site-author-name" itemprop="name">王凯彬</p>
+           
+              <p class="site-description motion-element" itemprop="description">iOS 学习总结 思考感悟 知识管理</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、距离传感器"><span class="nav-number">1.</span> <span class="nav-text">1、距离传感器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、加速计-CoreMotion"><span class="nav-number">2.</span> <span class="nav-text">2、加速计 CoreMotion</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#加速计的经典应用场景"><span class="nav-number">2.1.</span> <span class="nav-text">加速计的经典应用场景</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3、蓝牙"><span class="nav-number">3.</span> <span class="nav-text">3、蓝牙</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#iOS中提供了4个框架用于实现蓝牙连接"><span class="nav-number">3.1.</span> <span class="nav-text">iOS中提供了4个框架用于实现蓝牙连接</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4、陀螺仪与方向感应器"><span class="nav-number">4.</span> <span class="nav-text">4、陀螺仪与方向感应器</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">王凯彬</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
