@@ -1,0 +1,750 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="CoreText简介Core Text 是基于 iOS 3.2+ 和 OSX 10.5+ 的一种能够对文本格式和文本布局进行精细控制的文本引擎。它良好的结合了 UIKit 和 Core Graphics/Quartz：&amp;gt; UIKit的UILabel允许你通过在IB中简单的拖曳添加文本，但你不能改变文本的颜色和其中的单词。Core Graphics/Quartz几乎允许你做任何系统允许的事情，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CoreText实现图文混排以及点击事件">
+<meta property="og:url" content="http://yoursite.com/2017/08/05/CoreText实现图文混排以及点击事件/index.html">
+<meta property="og:site_name" content="王凯彬">
+<meta property="og:description" content="CoreText简介Core Text 是基于 iOS 3.2+ 和 OSX 10.5+ 的一种能够对文本格式和文本布局进行精细控制的文本引擎。它良好的结合了 UIKit 和 Core Graphics/Quartz：&amp;gt; UIKit的UILabel允许你通过在IB中简单的拖曳添加文本，但你不能改变文本的颜色和其中的单词。Core Graphics/Quartz几乎允许你做任何系统允许的事情，">
+<meta property="og:image" content="http://i1.bvimg.com/1949/96ed8957aedfb08d.jpg">
+<meta property="og:image" content="http://i1.bvimg.com/1949/e34179b7262c069a.gif">
+<meta property="og:image" content="http://i4.bvimg.com/1949/c60db79021e6c801.jpg">
+<meta property="og:image" content="http://i4.bvimg.com/1949/dee7c3a14e289722.jpg">
+<meta property="og:image" content="http://chuantu.biz/t5/160/1501901391x1948173751.png">
+<meta property="og:image" content="http://chuantu.biz/t5/160/1501913622x1948173751.png">
+<meta property="og:image" content="http://chuantu.biz/t5/160/1501907720x1948173751.png">
+<meta property="og:updated_time" content="2017-08-05T11:15:10.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CoreText实现图文混排以及点击事件">
+<meta name="twitter:description" content="CoreText简介Core Text 是基于 iOS 3.2+ 和 OSX 10.5+ 的一种能够对文本格式和文本布局进行精细控制的文本引擎。它良好的结合了 UIKit 和 Core Graphics/Quartz：&amp;gt; UIKit的UILabel允许你通过在IB中简单的拖曳添加文本，但你不能改变文本的颜色和其中的单词。Core Graphics/Quartz几乎允许你做任何系统允许的事情，">
+<meta name="twitter:image" content="http://i1.bvimg.com/1949/96ed8957aedfb08d.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"always","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/08/05/CoreText实现图文混排以及点击事件/"/>
+
+
+
+
+
+  <title> CoreText实现图文混排以及点击事件 | 王凯彬 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?931533eabc03369078b34713fefd96d2";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">王凯彬</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">个人技术博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/05/CoreText实现图文混排以及点击事件/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="王凯彬">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1497022439403&di=2f6fd5230ee9981e7eddc6cf7e9318ea&imgtype=0&src=http%3A%2F%2Fwww.leewiart.com%2Fuserfiles%2F27314%2F65bf4cc7b5b64ea29e30516680b3dc41_thumb_250.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="王凯彬">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                CoreText实现图文混排以及点击事件
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-05T19:14:18+08:00">
+                2017-08-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="CoreText简介"><a href="#CoreText简介" class="headerlink" title="CoreText简介"></a>CoreText简介</h3><p>Core Text 是基于 iOS 3.2+ 和 OSX 10.5+ 的一种能够对文本格式和文本布局进行精细控制的文本引擎。<br>它良好的结合了 UIKit 和 Core Graphics/Quartz：<br>&gt;</p>
+<font color="#ff0000">UIKit</font>的<font color="#ff0000">UILabel</font>允许你通过在<font color="#ff0000">IB</font>中简单的拖曳添加文本，但你不能改变文本的颜色和其中的单词。<br><font color="#ff0000">Core Graphics/Quartz</font>几乎允许你做任何系统允许的事情，但你需要为每个字形计算位置，并画在屏幕上。<br><font color="#ff0000">Core Text</font>正结合了这两者！你可以完全控制位置、布局、类似文本大小和颜色这样的属性，而<font color="#ff0000">Core Text</font>将帮你完善其它的东西——类似文本换行、字体呈现等等。<br><font color="#ff0000">iOS7</font>新推出的类库<font color="#ff0000">Textkit</font>，其实是在之前推出的CoreText上的封装<br><font color="#ff0000">CoreText</font>的主要作用也是用于文字的排版和渲染，但它是一种先进而又处于<font color="#0000ff">底层技术</font>，如果我们需要将文本内容直接渲染到图形上下文<font color="#ff0000">(Graphics context)</font>时，<font color="#0000ff">从性能和易用性来考虑，最佳方案就是使用CoreText</font>。<br><br>### 富文本<br>&gt;<br><font color="#ff0000">富文本格式(RTF)</font>规范是为了便于在应用程序之间轻松转储格式化<strong><em>文本</em></strong>和<strong><em>图形</em></strong>的一种<font color="#0000ff">编码方法</font>。<br>现在，用户可以利用特定转换软件，在不同系统如<font color="#0000ff">MS-DOS</font>、<font color="#0000ff">Windows</font>、<font color="#0000ff">OS/2</font>、<font color="#0000ff">Macintosh</font>和<font color="#0000ff">Power Macintosh</font>的应用程序之间转移字处理文档。<br><font color="#ff0000">RTF</font>规范提供一种在不同的输出设备、操作环境和操作系统之间交换文本和图形的一种格式。<br><font color="#ff0000">RTF</font>使用<font color="#0000ff">ANSI</font>,<font color="#0000ff">PC-8</font>, <font color="#0000ff">Macintosh</font>, 或<font color="#0000ff">IBM PC</font>字符集控制文档的表示法和格式化，包括屏幕显示和打印。<br>凭借<font color="#ff0000">RTF</font>规范，不同的操作系统和不同的软件程序创建的文档能够在这些操作系统和应用程序之间传递。<br>将一个格式化的文件转换为<font color="#ff0000">RTF</font>文件的软件称为<font color="#0000ff">RTF书写器</font>。<br><font color="#0000ff">RTF书写器</font>用于分离现有文本中的程序控制信息，并且生成一个包含文本和与之相关的<font color="#ff0000">RTF</font>组的新文件。<br>将<font color="#ff0000">RTF</font>文件转换成格式化文件的软件则称为<font color="#0000ff">RTF阅读器</font>。<br><br>简单来说附带有每一个文字属性的字符串，就是富文本。在iOS中，<code>AttributeString</code>专门用来处理富文本。<code>AttributedString</code>也分为<code>NSAttributedString</code>和<code>NSMutableAttributedString</code>两个类。<br>常用的一些方法<br><br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">-initWithString: <span class="comment">//以NSString初始化一个富文本对象</span></div><div class="line">-setAttributes:range: <span class="comment">//为富文本中的一段范围添加一些属性，第一个参数是个NSDictionary字典，第二个参数是NSRange。</span></div><div class="line">-addAttribute:value:range: <span class="comment">//添加一个属性</span></div><div class="line">-addAttributes:range: <span class="comment">//添加多个属性</span></div><div class="line">-removeAttribute:range: <span class="comment">//移除属性</span></div></pre></td></tr></table></figure><br><br>代码示例<br><br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">NSDictionary</span> * dic = @&#123;<span class="built_in">NSFontAttributeName</span>:[<span class="built_in">UIFont</span> fontWithName:<span class="string">@"Zapfino"</span> size:<span class="number">20</span>],<span class="built_in">NSForegroundColorAttributeName</span>:[<span class="built_in">UIColor</span> redColor],<span class="built_in">NSUnderlineStyleAttributeName</span>:@(<span class="built_in">NSUnderlineStyleSingle</span>)&#125;;</div><div class="line">    <span class="built_in">NSMutableAttributedString</span> * attributeStr = [[<span class="built_in">NSMutableAttributedString</span> alloc] initWithString:<span class="string">@"0我是一个富文本，9听说我有很多属性，19I will try。32这里清除属性."</span>];</div><div class="line"><span class="comment">//    设置属性</span></div><div class="line">    [attributeStr setAttributes:dic range:<span class="built_in">NSMakeRange</span>(<span class="number">0</span>, attributeStr.length)];</div><div class="line"><span class="comment">//    添加属性</span></div><div class="line">    [attributeStr addAttribute:<span class="built_in">NSFontAttributeName</span> value:[<span class="built_in">UIFont</span> systemFontOfSize:<span class="number">30</span>] range:<span class="built_in">NSMakeRange</span>(<span class="number">9</span>, <span class="number">10</span>)];</div><div class="line">    [attributeStr addAttribute:<span class="built_in">NSForegroundColorAttributeName</span> value:[<span class="built_in">UIColor</span> cyanColor] range:<span class="built_in">NSMakeRange</span>(<span class="number">13</span>, <span class="number">13</span>)];</div><div class="line"><span class="comment">//    添加多个属性</span></div><div class="line">    <span class="built_in">NSDictionary</span> * dicAdd = @&#123;<span class="built_in">NSBackgroundColorAttributeName</span>:[<span class="built_in">UIColor</span> yellowColor],<span class="built_in">NSLigatureAttributeName</span>:@<span class="number">1</span>&#125;;</div><div class="line">    [attributeStr addAttributes:dicAdd range:<span class="built_in">NSMakeRange</span>(<span class="number">19</span>, <span class="number">13</span>)];</div><div class="line"><span class="comment">//    移除属性</span></div><div class="line">    [attributeStr removeAttribute:<span class="built_in">NSFontAttributeName</span> range:<span class="built_in">NSMakeRange</span>(<span class="number">32</span>, <span class="number">9</span>)];</div><div class="line">    <span class="built_in">UILabel</span> * label = [[<span class="built_in">UILabel</span> alloc] initWithFrame:<span class="built_in">CGRectMake</span>(<span class="number">100</span>, <span class="number">100</span>, <span class="number">200</span>, <span class="number">400</span>)];</div><div class="line">    label.numberOfLines = <span class="number">0</span>;</div><div class="line">    label.attributedText = attributeStr;</div></pre></td></tr></table></figure><br><br>### CoreText坐标系与UIKit坐标系<br><img src="http://i1.bvimg.com/1949/96ed8957aedfb08d.jpg" alt=""><br>从图中可看出<font color="#ff0000">CoreText坐标系是以左下角为坐标原点</font>，而我们常用的<font color="#0000ff">UIKit是以左上角为坐标原点</font>。因此在CoreText中的布局完成后需要对其坐标系进行转换，否则直接绘制出现位置反转的镜像情况。<br>&gt;<br>在iOS的不同framework中使用着不同的坐标系：<br><font color="#ff0000">UIKit</font> － y轴向下<br><font color="#ff0000">Core Graphics(Quartz)</font> － y轴向上<br><font color="#ff0000">OpenGL ES</font>－ y轴向上<br><font color="#ff0000">UIKit</font>是iPhone SDK的Cocoa Touch层的核心framework，是iPhone应用程序图形界面和事件驱动的基础，它和传统的windows桌面一样，坐标系是y轴向下的;<font color="#ff0000">Core Graphics(Quartz)</font>一个基于<em>2D</em>的图形绘制引擎，它的坐标系则是y轴向上的；而<font color="#ff0000">OpenGL ES</font>是iPhone SDK的<em>2D</em>和<em>3D</em>绘制引擎，它使用左手坐标系，它的坐标系也是y轴向上的，如果不考虑z轴，在二维下它的坐标系和Quartz是一样的。<br><br>### CoreText绘制富文本<br>CoreText实现图文混排其实就是在富文本中插入一个空白的图片占位符的富文本字符串，通过代理设置相关的图片尺寸信息，根据从富文本得到的frame计算图片绘制的frame再绘制图片这么一个过程。<br>#### 整体代码<br><br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div></pre></td><td class="code"><pre><div class="line">-(<span class="keyword">void</span>)drawRect:(<span class="built_in">CGRect</span>)rect</div><div class="line">&#123;</div><div class="line">    [<span class="keyword">super</span> drawRect:rect];</div><div class="line">    <span class="comment">//获取当前绘制上下文</span></div><div class="line">    <span class="built_in">CGContextRef</span> context = <span class="built_in">UIGraphicsGetCurrentContext</span>();</div><div class="line">    <span class="built_in">CGContextSetTextMatrix</span>(context, <span class="built_in">CGAffineTransformIdentity</span>);<span class="comment">//设置当前文本矩阵为不做图形变换</span></div><div class="line">    <span class="built_in">CGContextTranslateCTM</span>(context, <span class="number">0</span>, <span class="keyword">self</span>.bounds.size.height);<span class="comment">//平移方法，将context向上平移一个屏幕高</span></div><div class="line">    <span class="built_in">CGContextScaleCTM</span>(context, <span class="number">1.0</span>, <span class="number">-1.0</span>);<span class="comment">//缩放方法，x轴缩放系数为1，则不变，y轴缩放系数为-1，则相当于以x轴为轴旋转180度</span></div><div class="line">    <span class="built_in">NSMutableAttributedString</span> * attributeStr = [[<span class="built_in">NSMutableAttributedString</span> alloc] initWithString:<span class="string">@"\n这里在测试图文混排，\n我是一个富文本"</span>];</div><div class="line">    <span class="built_in">CTRunDelegateCallbacks</span> callBacks;</div><div class="line">    memset(&amp;callBacks,<span class="number">0</span>,<span class="keyword">sizeof</span>(<span class="built_in">CTRunDelegateCallbacks</span>));</div><div class="line">    callBacks.version = kCTRunDelegateVersion1;</div><div class="line">    callBacks.getAscent = ascentCallBacks;</div><div class="line">    callBacks.getDescent = descentCallBacks;</div><div class="line">    callBacks.getWidth = widthCallBacks;</div><div class="line">    <span class="built_in">NSDictionary</span> * dicPic = @&#123;<span class="string">@"height"</span>:@<span class="number">129</span>,<span class="string">@"width"</span>:@<span class="number">129</span>&#125;;</div><div class="line">    <span class="built_in">CTRunDelegateRef</span> delegate = <span class="built_in">CTRunDelegateCreate</span>(&amp; callBacks, (__bridge <span class="keyword">void</span> *)dicPic);</div><div class="line">    <span class="keyword">unichar</span> placeHolder = <span class="number">0xFFFC</span>;</div><div class="line">    <span class="built_in">NSString</span> * placeHolderStr = [<span class="built_in">NSString</span> stringWithCharacters:&amp;placeHolder length:<span class="number">1</span>];</div><div class="line">    <span class="built_in">NSMutableAttributedString</span> * placeHolderAttrStr = [[<span class="built_in">NSMutableAttributedString</span> alloc] initWithString:placeHolderStr];</div><div class="line">    <span class="built_in">CFAttributedStringSetAttribute</span>((<span class="built_in">CFMutableAttributedStringRef</span>)placeHolderAttrStr, <span class="built_in">CFRangeMake</span>(<span class="number">0</span>, <span class="number">1</span>), kCTRunDelegateAttributeName, delegate);</div><div class="line">    <span class="built_in">CFRelease</span>(delegate);</div><div class="line">    [attributeStr insertAttributedString:placeHolderAttrStr atIndex:<span class="number">12</span>];</div><div class="line">    <span class="built_in">CTFramesetterRef</span> frameSetter = <span class="built_in">CTFramesetterCreateWithAttributedString</span>((<span class="built_in">CFAttributedStringRef</span>)attributeStr);</div><div class="line">    <span class="built_in">CGMutablePathRef</span> path = <span class="built_in">CGPathCreateMutable</span>();</div><div class="line">    <span class="built_in">CGPathAddRect</span>(path, <span class="literal">NULL</span>, <span class="keyword">self</span>.bounds);</div><div class="line">    <span class="built_in">NSInteger</span> length = attributeStr.length;</div><div class="line">    _length = attributeStr.length;</div><div class="line">    <span class="built_in">CTFrameRef</span> frame = <span class="built_in">CTFramesetterCreateFrame</span>(frameSetter, <span class="built_in">CFRangeMake</span>(<span class="number">0</span>, length), path, <span class="literal">NULL</span>);</div><div class="line">    _ctFrame = frame;</div><div class="line">    <span class="built_in">CTFrameDraw</span>(frame, context);</div><div class="line">    </div><div class="line">    <span class="built_in">UIImage</span> * image = [<span class="built_in">UIImage</span> imageNamed:<span class="string">@"bd_logo1.jpeg"</span>];</div><div class="line">    <span class="built_in">CGRect</span> imgFrm = [<span class="keyword">self</span> calculateImageRectWithFrame:frame];</div><div class="line">    <span class="keyword">self</span>.imgFrm = imgFrm;</div><div class="line">    <span class="built_in">CGContextDrawImage</span>(context,imgFrm, image.CGImage);</div><div class="line">    </div><div class="line">    <span class="built_in">CFRelease</span>(path);</div><div class="line">    <span class="built_in">CFRelease</span>(frameSetter);</div><div class="line">&#125;</div><div class="line"><span class="keyword">static</span> <span class="built_in">CGFloat</span> ascentCallBacks(<span class="keyword">void</span> * ref)</div><div class="line">&#123;</div><div class="line">    <span class="keyword">return</span> [(<span class="built_in">NSNumber</span> *)[(__bridge <span class="built_in">NSDictionary</span> *)ref valueForKey:<span class="string">@"height"</span>] floatValue];</div><div class="line">&#125;</div><div class="line"><span class="keyword">static</span> <span class="built_in">CGFloat</span> descentCallBacks(<span class="keyword">void</span> * ref)</div><div class="line">&#123;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"><span class="keyword">static</span> <span class="built_in">CGFloat</span> widthCallBacks(<span class="keyword">void</span> * ref)</div><div class="line">&#123;</div><div class="line">    <span class="keyword">return</span> [(<span class="built_in">NSNumber</span> *)[(__bridge <span class="built_in">NSDictionary</span> *)ref valueForKey:<span class="string">@"width"</span>] floatValue];</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">-(<span class="built_in">CGRect</span>)calculateImageRectWithFrame:(<span class="built_in">CTFrameRef</span>)frame</div><div class="line">&#123;</div><div class="line">    <span class="built_in">NSArray</span> * arrLines = (<span class="built_in">NSArray</span> *)<span class="built_in">CTFrameGetLines</span>(frame);</div><div class="line">    <span class="built_in">NSInteger</span> count = [arrLines count];</div><div class="line">    <span class="built_in">CGPoint</span> points[count];</div><div class="line">    <span class="built_in">CTFrameGetLineOrigins</span>(frame, <span class="built_in">CFRangeMake</span>(<span class="number">0</span>, <span class="number">0</span>), points);</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; count; i ++) &#123;</div><div class="line">        <span class="built_in">CTLineRef</span> line = (__bridge <span class="built_in">CTLineRef</span>)arrLines[i];</div><div class="line">        <span class="built_in">NSArray</span> * arrGlyphRun = (<span class="built_in">NSArray</span> *)<span class="built_in">CTLineGetGlyphRuns</span>(line);</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; arrGlyphRun.count; j ++) &#123;</div><div class="line">            <span class="built_in">CTRunRef</span> run = (__bridge <span class="built_in">CTRunRef</span>)arrGlyphRun[j];</div><div class="line">            <span class="built_in">NSDictionary</span> * attributes = (<span class="built_in">NSDictionary</span> *)<span class="built_in">CTRunGetAttributes</span>(run);            <span class="built_in">CTRunDelegateRef</span> delegate = (__bridge <span class="built_in">CTRunDelegateRef</span>)[attributes valueForKey:(<span class="keyword">id</span>)kCTRunDelegateAttributeName];</div><div class="line">            <span class="keyword">if</span> (delegate == <span class="literal">nil</span>) &#123;</div><div class="line">                <span class="keyword">continue</span>;</div><div class="line">            &#125;</div><div class="line">            <span class="built_in">NSDictionary</span> * dic = <span class="built_in">CTRunDelegateGetRefCon</span>(delegate);</div><div class="line">            <span class="keyword">if</span> (![dic isKindOfClass:[<span class="built_in">NSDictionary</span> <span class="keyword">class</span>]]) &#123;</div><div class="line">                <span class="keyword">continue</span>;</div><div class="line">            &#125;</div><div class="line">            <span class="built_in">CGPoint</span> point = points[i];</div><div class="line">            <span class="built_in">CGFloat</span> ascent;</div><div class="line">            <span class="built_in">CGFloat</span> descent;</div><div class="line">            <span class="built_in">CGRect</span> boundsRun;</div><div class="line">            boundsRun.size.width = <span class="built_in">CTRunGetTypographicBounds</span>(run, <span class="built_in">CFRangeMake</span>(<span class="number">0</span>, <span class="number">0</span>), &amp;ascent, &amp;descent, <span class="literal">NULL</span>);</div><div class="line">            boundsRun.size.height = ascent + descent;</div><div class="line">            <span class="built_in">CGFloat</span> xOffset = <span class="built_in">CTLineGetOffsetForStringIndex</span>(line, <span class="built_in">CTRunGetStringRange</span>(run).location, <span class="literal">NULL</span>);</div><div class="line">            boundsRun.origin.x = point.x + xOffset;</div><div class="line">            boundsRun.origin.y = point.y - descent;</div><div class="line">            <span class="built_in">CGPathRef</span> path = <span class="built_in">CTFrameGetPath</span>(frame);</div><div class="line">            <span class="built_in">CGRect</span> colRect = <span class="built_in">CGPathGetBoundingBox</span>(path);</div><div class="line">            <span class="built_in">CGRect</span> imageBounds = <span class="built_in">CGRectOffset</span>(boundsRun, colRect.origin.x, colRect.origin.y);</div><div class="line">            <span class="keyword">return</span> imageBounds;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="built_in">CGRectZero</span>;</div><div class="line">&#125;</div><div class="line">- (<span class="keyword">void</span>)dealloc</div><div class="line">&#123;</div><div class="line">    <span class="built_in">CFRelease</span>(_ctFrame);</div><div class="line">&#125;</div><div class="line">```  </div><div class="line"><span class="meta">#### 逐句解释</span></div><div class="line"></div><div class="line">```objectivec</div><div class="line"> <span class="built_in">CGContextRef</span> context = <span class="built_in">UIGraphicsGetCurrentContext</span>();<span class="comment">//获取当前绘制上下文</span></div></pre></td></tr></table></figure><br><br>所有的绘制操作都是在上下文上进行绘制的<br><br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//设置当前文本矩阵为不做图形变换</span></div><div class="line"><span class="built_in">CGContextSetTextMatrix</span>(context, <span class="built_in">CGAffineTransformIdentity</span>); </div><div class="line"><span class="comment">//平移方法，将context向上平移一个屏幕高</span></div><div class="line"><span class="built_in">CGContextTranslateCTM</span>(context, <span class="number">0</span>, <span class="keyword">self</span>.bounds.size.height);</div><div class="line"><span class="comment">//缩放方法，x轴缩放系数为1，则不变，y轴缩放系数为-1，则相当于以x轴为轴旋转180度</span></div><div class="line"><span class="built_in">CGContextScaleCTM</span>(context, <span class="number">1.0</span>, <span class="number">-1.0</span>);</div></pre></td></tr></table></figure><br><br>coreText 起初是为OSX设计的，而OSX得坐标原点是左下角，y轴正方向朝上。iOS中坐标原点是左上角，y轴正方向向下。若不进行坐标转换，则文字从下开始，还是倒着的。这三句对context的坐标系进行转换<br>&gt;context说的是绘画人所处的角度上下文,画布无论怎么样都是正对着屏幕的，它不会旋转，或者放大缩小，或者移动,认为context就是画布这种理解是错误的<br>CTM，Context Translate Matrix。 它是把要绘制的上下文以一个叫做Matrix的东西来表示，可以简单地想作，绘制的上下文的每一个点都映射在Matrix上，你在Matrix上的操作都会使得上下文上的点产生相应的变动。如放大、旋转、移动。<br><br><br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*</span></div><div class="line">事实上，图文混排就是在要插入图片的位置插入一个富文本类型的占位符。通过CTRUNDelegate设置图片</div><div class="line">设置一个回调结构体，告诉代理该回调那些方法</div><div class="line">*/</div><div class="line"><span class="comment">//创建一个回调结构体，设置相关参数</span></div><div class="line"><span class="built_in">CTRunDelegateCallbacks</span> callBacks;</div><div class="line"><span class="comment">//memset将已开辟内存空间 callbacks 的首 n 个字节的值设为值 0, 相当于对CTRunDelegateCallbacks内存空间初始化</span></div><div class="line">memset(&amp;callBacks,<span class="number">0</span>,<span class="keyword">sizeof</span>(<span class="built_in">CTRunDelegateCallbacks</span>));</div><div class="line"><span class="comment">//设置回调版本，默认这个</span></div><div class="line">callBacks.version = kCTRunDelegateVersion1;</div><div class="line"><span class="comment">//设置图片顶部距离基线的距离</span></div><div class="line">callBacks.getAscent = ascentCallBacks;</div><div class="line"><span class="comment">//设置图片底部距离基线的距离</span></div><div class="line">callBacks.getDescent = descentCallBacks;</div><div class="line"><span class="comment">//设置图片宽度</span></div><div class="line">callBacks.getWidth = widthCallBacks;</div></pre></td></tr></table></figure><br><br>coreText中大量的调用c的方法。大部分跟系统底层有关的都需要调c的方法。所以设置代理要按照人家的方法来啊。<br><br><font color="#ff00ff" size="3px">补充一下知识</font>  
+
+<p><img src="http://i1.bvimg.com/1949/e34179b7262c069a.gif" alt="">  </p>
+<p>这是一个CTRun的尺寸图，我们绘制图片的时候实际上实在一个CTRun中绘制这个图片，那么CTRun绘制的坐标系中，它会以origin点作为原点进行绘制。<br><code>基线为过原点的x轴，ascent即为CTRun顶线距基线的距离，descent即为底线距基线的距离。</code><br>我们绘制图片应该从原点开始绘制，图片的高度及宽度及CTRun的高度及宽度，我们通过代理设置CTRun的尺寸间接设置图片的尺寸。  </p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">NSDictionary</span> * dicPic = @&#123;<span class="string">@"height"</span>:@<span class="number">129</span>,<span class="string">@"width"</span>:@<span class="number">129</span>&#125;;</div><div class="line"><span class="built_in">CTRunDelegateRef</span> delegate = <span class="built_in">CTRunDelegateCreate</span>(&amp; callBacks, (__bridge <span class="keyword">void</span> *)dicPic);</div></pre></td></tr></table></figure>
+<p>上面只是设置了回调结构体，然而我们还没有告诉这个代理我们要的图片尺寸。<br>所以这句话就在<code>设置代理的时候绑定了一个返回图片尺寸的字典。</code><br>事实上此处你可以<code>绑定任意对象</code>。此处你<code>绑定的对象既是回调方法中的参数ref</code>。<br>三个回调方法代码如下</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">static</span> <span class="built_in">CGFloat</span> ascentCallBacks(<span class="keyword">void</span> * ref)</div><div class="line">&#123;</div><div class="line">    <span class="keyword">return</span> [(<span class="built_in">NSNumber</span> *)[(__bridge <span class="built_in">NSDictionary</span> *)ref valueForKey:<span class="string">@"height"</span>] floatValue];</div><div class="line">&#125;</div><div class="line"><span class="keyword">static</span> <span class="built_in">CGFloat</span> descentCallBacks(<span class="keyword">void</span> * ref)</div><div class="line">&#123;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"><span class="keyword">static</span> <span class="built_in">CGFloat</span> widthCallBacks(<span class="keyword">void</span> * ref)</div><div class="line">&#123;</div><div class="line">    <span class="keyword">return</span> [(<span class="built_in">NSNumber</span> *)[(__bridge <span class="built_in">NSDictionary</span> *)ref valueForKey:<span class="string">@"width"</span>] floatValue];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>由于是c的方法，所以也没有什么对象的概念。是一个指针类型的数据。不过oc的对象其实也就是c的结构体。我们可以通过类型转换获得oc中的字典。<br><code>__bridge既是C的结构体转换成OC对象时需要的一个修饰词。</code></p>
+<p>图片的插入(创建一个富文本类型的图片占位符，绑定我们的代理)</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//创建空白字符</span></div><div class="line"><span class="keyword">unichar</span> placeHolder = <span class="number">0xFFFC</span>;</div><div class="line"><span class="comment">//已空白字符生成字符串</span></div><div class="line"><span class="built_in">NSString</span> * placeHolderStr = [<span class="built_in">NSString</span> stringWithCharacters:&amp;placeHolder length:<span class="number">1</span>];</div><div class="line"><span class="comment">//用字符串初始化占位符的富文本</span></div><div class="line"><span class="built_in">NSMutableAttributedString</span> * placeHolderAttrStr = [[<span class="built_in">NSMutableAttributedString</span> alloc] initWithString:placeHolderStr];</div><div class="line"><span class="comment">//给字符串中的范围中字符串设置代理</span></div><div class="line"><span class="built_in">CFAttributedStringSetAttribute</span>((<span class="built_in">CFMutableAttributedStringRef</span>)placeHolderAttrStr, <span class="built_in">CFRangeMake</span>(<span class="number">0</span>, <span class="number">1</span>), kCTRunDelegateAttributeName, delegate);</div><div class="line"><span class="comment">//释放（__bridge进行C与OC数据类型的转换，C为非ARC，需要手动管理）</span></div><div class="line"><span class="built_in">CFRelease</span>(delegate);</div></pre></td></tr></table></figure>
+<p>C中就是传递指针的数据比如说字符串，数组时转换不需要用__bridge<br>需要手动释放是因为进行了类型转换之后就不属于对象了，也不再归自动引用计数机制管理了，所以手动管理。  </p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//将占位符插入原富文本</span></div><div class="line">[attributeStr insertAttributedString:placeHolderAttrStr atIndex:<span class="number">12</span>];</div></pre></td></tr></table></figure>
+<p>绘制文本</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//一个frame的工厂，负责生成frame</span></div><div class="line"><span class="built_in">CTFramesetterRef</span> frameSetter = <span class="built_in">CTFramesetterCreateWithAttributedString</span>((<span class="built_in">CFAttributedStringRef</span>)attributeStr);</div><div class="line"><span class="comment">//创建绘制区域</span></div><div class="line"><span class="built_in">CGMutablePathRef</span> path = <span class="built_in">CGPathCreateMutable</span>();</div><div class="line"><span class="comment">//添加绘制尺寸</span></div><div class="line"><span class="built_in">CGPathAddRect</span>(path, <span class="literal">NULL</span>, <span class="keyword">self</span>.bounds);</div><div class="line"><span class="built_in">NSInteger</span> length = attributeStr.length;</div><div class="line"><span class="comment">//工厂根据绘制区域及富文本（可选范围，多次设置）设置frame</span></div><div class="line"><span class="built_in">CTFrameRef</span> frame = <span class="built_in">CTFramesetterCreateFrame</span>(frameSetter, <span class="built_in">CFRangeMake</span>(<span class="number">0</span>,length), path, <span class="literal">NULL</span>);</div><div class="line"><span class="comment">//根据frame绘制文字</span></div><div class="line"><span class="built_in">CTFrameDraw</span>(frame, context);</div></pre></td></tr></table></figure>
+<p><strong><code>frameSetter</code></strong>是根据富文本生成的一个<strong><code>frame</code></strong>生成的工厂，你可以通过<strong><code>framesetter</code></strong>以及你想要绘制的富文本的范围获取该CTRun的frame。<br>但是你需要注意的是，获取的frame是仅绘制你所需要的那部分富文本的frame。即当前情况下，你绘制范围定为（10，1），那么你得到的尺寸是只绘制（10，1）的尺寸，他应该从屏幕左上角开始（因为你改变了坐标系），而不是当你绘制全部富文本时他该在的位置。</p>
+<p>然后建立一会绘制的尺寸，实际上就是在指定你的绘制范围。<br>接着生成整个富文本绘制所需要的<strong><code>frame</code></strong>。因为范围是全部文本，所以获取的frame即为全部文本的frame(一定要搞清楚全部与指定范围获取的frame他们都是从左上角开始的，否则你会进入一个奇怪的误区，稍后会提到的)。<br>最后，根据你获得的frame，绘制全部富文本  </p>
+<font color="#ff00ff" size="3px">补充一下知识</font>   
+
+<p><img src="http://i4.bvimg.com/1949/c60db79021e6c801.jpg" alt=""><br><img src="http://i4.bvimg.com/1949/dee7c3a14e289722.jpg" alt="">  </p>
+<blockquote>
+<p>CTFrame可以理解为一个整体的画布由很多行(CTLine)组成，而每一行又由一个或者多个小方块(CTRun)组成，我们不需要自己创建CTRun，Core Text将根据NSAttributedString的属性来自动创建CTRun。每个CTRun对象对应不同的属性，正因此，你可以自由的控制字体、颜色、字间距等等信息。</p>
+<p>CTFramesetter其实就是CTFrame的工厂方法，通过给定的NSAttributedString，生成CTRrame，同时系统自动的创建了CTTypesetter，CTTypesetter就是管理你的字体的类。</p>
+</blockquote>
+<p>绘制图片<br>绘制图片用下面这个方法</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">CGContextDrawImage</span>(context,imgFrm, image.CGImage);<span class="comment">//绘制图片</span></div></pre></td></tr></table></figure>
+<p>有三个参数，分别是context，frame，以及image。context就是当前的上下文image就是要添加的那个图片，不过是CGImage类型,通过UIImage转出CGImage就好了，下面讲一下frame的获取:<strong><code>-(CGRect)calculateImageRectWithFrame:(CTFrameRef)frame</code></strong>。</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//根据frame获取需要绘制的线的数组</span></div><div class="line"><span class="built_in">NSArray</span> * arrLines = (<span class="built_in">NSArray</span> *)<span class="built_in">CTFrameGetLines</span>(frame);</div><div class="line"><span class="comment">//获取线的数量</span></div><div class="line"><span class="built_in">NSInteger</span> count = [arrLines count];</div><div class="line"><span class="comment">//建立起点的数组（cgpoint类型为结构体，故用C语言的数组）</span></div><div class="line"><span class="built_in">CGPoint</span> points[count];</div><div class="line"><span class="comment">//获取起点</span></div><div class="line"><span class="built_in">CTFrameGetLineOrigins</span>(frame, <span class="built_in">CFRangeMake</span>(<span class="number">0</span>, <span class="number">0</span>), points);</div></pre></td></tr></table></figure>
+<p>因为CTFrameGetLines（）返回值是CFArrayRef类型的数据。就是一个c的数组类型吧<br>每个CTLine都有自己的origin。所以要生成一个相同元素个数的数组去盛放origin对象。<br>然后用CTFrameGetLineOrigins获取所有原点。</p>
+<p>计算frame<br>遍历frame中的所有CTRun，检查是不是我们绑定图片的那个，如果是，根据该CTRun所在CTLine的origin以及CTRun在CTLine中的横向偏移量计算出CTRun的原点，加上其尺寸即为该CTRun的尺寸。</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; count; i ++) &#123;<span class="comment">//遍历线的数组</span></div><div class="line">        <span class="built_in">CTLineRef</span> line = (__bridge <span class="built_in">CTLineRef</span>)arrLines[i];</div><div class="line">        <span class="built_in">NSArray</span> * arrGlyphRun = (<span class="built_in">NSArray</span> *)<span class="built_in">CTLineGetGlyphRuns</span>(line);<span class="comment">//获取GlyphRun数组（GlyphRun：高效的字符绘制方案）</span></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; arrGlyphRun.count; j ++) &#123;<span class="comment">//遍历CTRun数组</span></div><div class="line">            <span class="built_in">CTRunRef</span> run = (__bridge <span class="built_in">CTRunRef</span>)arrGlyphRun[j];<span class="comment">//获取CTRun</span></div><div class="line">            <span class="built_in">NSDictionary</span> * attributes = (<span class="built_in">NSDictionary</span> *)<span class="built_in">CTRunGetAttributes</span>(run);<span class="comment">//获取CTRun的属性</span></div><div class="line">            <span class="built_in">CTRunDelegateRef</span> delegate = (__bridge <span class="built_in">CTRunDelegateRef</span>)[attributes valueForKey:(<span class="keyword">id</span>)kCTRunDelegateAttributeName];<span class="comment">//获取代理</span></div><div class="line">            <span class="keyword">if</span> (delegate == <span class="literal">nil</span>) &#123;<span class="comment">//非空</span></div><div class="line">                <span class="keyword">continue</span>;</div><div class="line">            &#125;</div><div class="line">            <span class="built_in">NSDictionary</span> * dic = <span class="built_in">CTRunDelegateGetRefCon</span>(delegate);<span class="comment">//判断代理字典</span></div><div class="line">            <span class="keyword">if</span> (![dic isKindOfClass:[<span class="built_in">NSDictionary</span> <span class="keyword">class</span>]]) &#123;</div><div class="line">                <span class="keyword">continue</span>;</div><div class="line">            &#125;</div><div class="line">            <span class="built_in">CGPoint</span> point = points[i];<span class="comment">//获取一个起点</span></div><div class="line">            <span class="built_in">CGFloat</span> ascent;<span class="comment">//获取上距</span></div><div class="line">            <span class="built_in">CGFloat</span> descent;<span class="comment">//获取下距</span></div><div class="line">            <span class="built_in">CGRect</span> boundsRun;<span class="comment">//创建一个frame</span></div><div class="line">            boundsRun.size.width = <span class="built_in">CTRunGetTypographicBounds</span>(run, <span class="built_in">CFRangeMake</span>(<span class="number">0</span>, <span class="number">0</span>), &amp;ascent, &amp;descent, <span class="literal">NULL</span>);</div><div class="line">            boundsRun.size.height = ascent + descent;<span class="comment">//取得高</span></div><div class="line">            <span class="built_in">CGFloat</span> xOffset = <span class="built_in">CTLineGetOffsetForStringIndex</span>(line, <span class="built_in">CTRunGetStringRange</span>(run).location, <span class="literal">NULL</span>);<span class="comment">//获取x偏移量</span></div><div class="line">            boundsRun.origin.x = point.x + xOffset;<span class="comment">//point是行起点位置，加上每个字的偏移量得到每个字的x</span></div><div class="line">            boundsRun.origin.y = point.y - descent;<span class="comment">//计算原点</span></div><div class="line">            <span class="built_in">CGPathRef</span> path = <span class="built_in">CTFrameGetPath</span>(frame);<span class="comment">//获取绘制区域</span></div><div class="line">            <span class="built_in">CGRect</span> colRect = <span class="built_in">CGPathGetBoundingBox</span>(path);<span class="comment">//获取剪裁区域边框</span></div><div class="line">            <span class="built_in">CGRect</span> imageBounds = <span class="built_in">CGRectOffset</span>(boundsRun, colRect.origin.x, colRect.origin.y);</div><div class="line">            <span class="keyword">return</span> imageBounds;</div></pre></td></tr></table></figure>
+<p>手动释放创建的对象</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">CFRelease</span>(path);</div><div class="line"><span class="built_in">CFRelease</span>(frameSetter);</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)dealloc</div><div class="line">&#123;</div><div class="line">    <span class="built_in">CFRelease</span>(_ctFrame);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="两坐标系中point和frame的变换"><a href="#两坐标系中point和frame的变换" class="headerlink" title="两坐标系中point和frame的变换"></a>两坐标系中point和frame的变换</h4><blockquote>
+<p>point<br>UIKit坐标系上的point转换为CoreText坐标系上的point，在UIKit坐标系上的一个点为(x,y),其在CoreText坐标系上为(x,self.bounds.size.height - y)<br>反过来转换也是一样的在CoreText坐标系上的一个点为(x,y),其在UIKit坐标系上为(x,self.bounds.size.height - y)  </p>
+<p>frame<br>UIKit坐标系上的frame转换为CoreText坐标系上的frame，在UIKit坐标系上的一个frame为(x,y,width,height),其在CoreText坐标系上为(x,self.bounds.size.height - y - height,width,height)<br>反过来转换也是一样的在CoreText坐标系上的一个frame为(x,y,width,height),其在UIKit坐标系上为(x,self.bounds.size.height - y - height,width,height)</p>
+</blockquote>
+<h3 id="实现点击事件"><a href="#实现点击事件" class="headerlink" title="实现点击事件"></a>实现点击事件</h3><p>通过touchBegan方法拿到当前点击到的点，然后通过坐标判断这个点是否在某段文字上，如果在则触发对应事件。  </p>
+<h4 id="整体代码"><a href="#整体代码" class="headerlink" title="整体代码"></a>整体代码</h4><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)touchesBegan:(<span class="built_in">NSSet</span>&lt;<span class="built_in">UITouch</span> *&gt; *)touches withEvent:(<span class="built_in">UIEvent</span> *)event</div><div class="line">&#123;</div><div class="line">    <span class="built_in">UITouch</span> * touch = [touches anyObject];</div><div class="line">    <span class="built_in">CGPoint</span> location = [<span class="keyword">self</span> systemPointFromScreenPoint:[touch locationInView:<span class="keyword">self</span>]];</div><div class="line">    <span class="keyword">if</span> ([<span class="keyword">self</span> checkIsClickOnImgWithPoint:location])</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    &#125;</div><div class="line">    [<span class="keyword">self</span> clickOnStrWithPoint:location];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="built_in">BOOL</span>)checkIsClickOnImgWithPoint:(<span class="built_in">CGPoint</span>)location</div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span> ([<span class="keyword">self</span> isFrame:<span class="keyword">self</span>.imgFrm containsPoint:location])</div><div class="line">    &#123;</div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"您点击到了图片"</span>);</div><div class="line">        <span class="keyword">return</span> <span class="literal">YES</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="literal">NO</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)clickOnStrWithPoint:(<span class="built_in">CGPoint</span>)location</div><div class="line">&#123;</div><div class="line">    <span class="built_in">NSArray</span> * lines = (<span class="built_in">NSArray</span> *)<span class="built_in">CTFrameGetLines</span>(_ctFrame);</div><div class="line">    <span class="built_in">CFRange</span> ranges[lines.count];</div><div class="line">    <span class="built_in">CGPoint</span> origins[lines.count];</div><div class="line">    <span class="built_in">CTFrameGetLineOrigins</span>(_ctFrame, <span class="built_in">CFRangeMake</span>(<span class="number">0</span>, <span class="number">0</span>), origins);</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; lines.count; i ++)</div><div class="line">    &#123;</div><div class="line">        <span class="built_in">CTLineRef</span> line = (__bridge <span class="built_in">CTLineRef</span>)lines[i];</div><div class="line">        <span class="built_in">CFRange</span> range = <span class="built_in">CTLineGetStringRange</span>(line);</div><div class="line">        ranges[i] = range;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; _length; i ++)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">long</span> maxLoc = <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> lineNum = <span class="number">0</span>;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; lines.count; j ++)</div><div class="line">        &#123;</div><div class="line">            <span class="built_in">CFRange</span> range = ranges[j];</div><div class="line">            maxLoc = range.location + range.length <span class="number">-1</span>;</div><div class="line">            <span class="keyword">if</span> (i &lt;= maxLoc)</div><div class="line">            &#123;</div><div class="line">                lineNum = j;</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="built_in">CTLineRef</span> line = (__bridge <span class="built_in">CTLineRef</span>)lines[lineNum];</div><div class="line">        <span class="built_in">CGPoint</span> origin = origins[lineNum];</div><div class="line">        <span class="built_in">CGRect</span> <span class="built_in">CTRunFrame</span> = [<span class="keyword">self</span> frameForCTRunWithIndex:i <span class="built_in">CTLine</span>:line origin:origin];</div><div class="line">        <span class="keyword">if</span> ([<span class="keyword">self</span> isFrame:<span class="built_in">CTRunFrame</span> containsPoint:location])</div><div class="line">        &#123;</div><div class="line">            <span class="built_in">NSLog</span>(<span class="string">@"您点击到了第 %d 个字符，位于第 %d 行，然而他没有响应事件。"</span>,i,lineNum + <span class="number">1</span>);<span class="comment">//点击到文字，然而没有响应的处理。可以做其他处理</span></div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"您没有点击到文字"</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="built_in">BOOL</span>)isIndex:(<span class="built_in">NSInteger</span>)index inRange:(<span class="built_in">NSRange</span>)range</div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span> ((index &lt;= range.location + range.length - <span class="number">1</span>) &amp;&amp; (index &gt;= range.location))</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">return</span> <span class="literal">YES</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="literal">NO</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="built_in">CGPoint</span>)systemPointFromScreenPoint:(<span class="built_in">CGPoint</span>)origin</div><div class="line">&#123;</div><div class="line">    <span class="keyword">return</span> <span class="built_in">CGPointMake</span>(origin.x, <span class="keyword">self</span>.bounds.size.height - origin.y);</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="built_in">BOOL</span>)isFrame:(<span class="built_in">CGRect</span>)frame containsPoint:(<span class="built_in">CGPoint</span>)point</div><div class="line">&#123;</div><div class="line">    <span class="keyword">return</span> <span class="built_in">CGRectContainsPoint</span>(frame, point);</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="built_in">CGRect</span>)frameForCTRunWithIndex:(<span class="built_in">NSInteger</span>)index <span class="built_in">CTLine</span>:(<span class="built_in">CTLineRef</span>)line origin:(<span class="built_in">CGPoint</span>)origin</div><div class="line">&#123;</div><div class="line">    <span class="built_in">CGFloat</span> offsetX = <span class="built_in">CTLineGetOffsetForStringIndex</span>(line, index, <span class="literal">NULL</span>);</div><div class="line">    <span class="built_in">CGFloat</span> offsetX2 = <span class="built_in">CTLineGetOffsetForStringIndex</span>(line, index + <span class="number">1</span>, <span class="literal">NULL</span>);</div><div class="line">    offsetX += origin.x;</div><div class="line">    offsetX2 += origin.x;</div><div class="line">    <span class="built_in">CGFloat</span> offsetY = origin.y;</div><div class="line">    <span class="built_in">CGFloat</span> lineAscent;</div><div class="line">    <span class="built_in">CGFloat</span> lineDeScent;</div><div class="line">    <span class="built_in">NSArray</span> * runs = (__bridge <span class="built_in">NSArray</span> *)<span class="built_in">CTLineGetGlyphRuns</span>(line);</div><div class="line">    <span class="built_in">CTRunRef</span> runCurrent;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; runs.count; k ++)</div><div class="line">    &#123;</div><div class="line">        <span class="built_in">CTRunRef</span> run = (__bridge <span class="built_in">CTRunRef</span>)runs[k];</div><div class="line">        <span class="built_in">CFRange</span> range = <span class="built_in">CTRunGetStringRange</span>(run);</div><div class="line">        <span class="built_in">NSRange</span> rangeOC = <span class="built_in">NSMakeRange</span>(range.location, range.length);</div><div class="line">        <span class="keyword">if</span> ([<span class="keyword">self</span> isIndex:index inRange:rangeOC])</div><div class="line">        &#123;</div><div class="line">            runCurrent = run;</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="built_in">CTRunGetTypographicBounds</span>(runCurrent, <span class="built_in">CFRangeMake</span>(<span class="number">0</span>, <span class="number">0</span>), &amp;lineAscent, &amp;lineDeScent, <span class="literal">NULL</span>);</div><div class="line">    <span class="built_in">CGFloat</span> height = lineAscent + lineDeScent;</div><div class="line">    <span class="keyword">return</span> <span class="built_in">CGRectMake</span>(offsetX, offsetY, offsetX2 - offsetX, height);</div><div class="line">    </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="分段解析"><a href="#分段解析" class="headerlink" title="分段解析"></a>分段解析</h4><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">///点击方法</span></div><div class="line">-(<span class="keyword">void</span>)touchesBegan:(<span class="built_in">NSSet</span>&lt;<span class="built_in">UITouch</span> *&gt; *)touches withEvent:(<span class="built_in">UIEvent</span> *)event</div><div class="line">&#123;</div><div class="line">    <span class="built_in">UITouch</span> * touch = [touches anyObject];</div><div class="line">   <span class="comment">//获得点击位置在CoreText坐标系上的坐标</span></div><div class="line">    <span class="built_in">CGPoint</span> location = [<span class="keyword">self</span> systemPointFromScreenPoint:[touch locationInView:<span class="keyword">self</span>]];</div><div class="line">    <span class="keyword">if</span> ([<span class="keyword">self</span> checkIsClickOnImgWithPoint:location]) &#123;<span class="comment">//检查是否点击在图片上，如果在，优先响应图片事件</span></div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    &#125;</div><div class="line">    [<span class="keyword">self</span> ClickOnStrWithPoint:location];<span class="comment">//响应字符串事件</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>坐标转换<br>因为UIKit坐标系与系统坐标系的不同，我们要将坐标系统一为CoreText坐标</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//坐标转换，将UIkit坐标转换为CoreText坐标</span></div><div class="line">- (<span class="built_in">CGPoint</span>)systemPointFromScreenPoint:(<span class="built_in">CGPoint</span>)origin</div><div class="line">&#123;</div><div class="line">    <span class="keyword">return</span> <span class="built_in">CGPointMake</span>(origin.x, <span class="keyword">self</span>.bounds.size.height - origin.y);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>点击图片判断  </p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//遍历图片frame的数组与点击位置比较，如果在范围内则响应数组取出对应响应并执行，返回YES,否则返回NO</span></div><div class="line">- (<span class="built_in">BOOL</span>)checkIsClickOnImgWithPoint:(<span class="built_in">CGPoint</span>)location</div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span> ([<span class="keyword">self</span> isFrame:<span class="keyword">self</span>.imgFrm containsPoint:location])</div><div class="line">    &#123;</div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"您点击到了图片"</span>);</div><div class="line">        <span class="keyword">return</span> <span class="literal">YES</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="literal">NO</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//检测点是否包含在frame中</span></div><div class="line">- (<span class="built_in">BOOL</span>)isFrame:(<span class="built_in">CGRect</span>)frame containsPoint:(<span class="built_in">CGPoint</span>)point</div><div class="line">&#123;</div><div class="line">    <span class="keyword">return</span> <span class="built_in">CGRectContainsPoint</span>(frame, point);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>由于传入的point是CoreText坐标（本例中），所以frame我们一定要传入CoreText坐标系下的frame才能正确对应。</p>
+<p>点击文字判断<br><img src="http://chuantu.biz/t5/160/1501901391x1948173751.png" alt="">  </p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//字符串点击检查</span></div><div class="line"><span class="comment">//将响应字符串的每个字符取出与点击位置比较，若在范围内则点击到响应文字</span></div><div class="line">- (<span class="keyword">void</span>)clickOnStrWithPoint:(<span class="built_in">CGPoint</span>)location</div><div class="line">&#123;</div><div class="line">    <span class="built_in">NSArray</span> * lines = (<span class="built_in">NSArray</span> *)<span class="built_in">CTFrameGetLines</span>(_ctFrame);<span class="comment">//获取所有CTLine</span></div><div class="line">    <span class="built_in">CFRange</span> ranges[lines.count];<span class="comment">//初始化每一CTLine的range数组</span></div><div class="line">    <span class="built_in">CGPoint</span> origins[lines.count];<span class="comment">//初始化每一CTLine的原点数组</span></div><div class="line">    <span class="built_in">CTFrameGetLineOrigins</span>(_ctFrame, <span class="built_in">CFRangeMake</span>(<span class="number">0</span>, <span class="number">0</span>), origins);<span class="comment">//获取所有CTLine的原点</span></div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; lines.count; i ++)</div><div class="line">    &#123;</div><div class="line">        <span class="built_in">CTLineRef</span> line = (__bridge <span class="built_in">CTLineRef</span>)lines[i];</div><div class="line">        <span class="built_in">CFRange</span> range = <span class="built_in">CTLineGetStringRange</span>(line);</div><div class="line">        ranges[i] = range;</div><div class="line">    &#125;<span class="comment">//获得所有CTLine的Range</span></div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; _length; i ++)</div><div class="line">    &#123;<span class="comment">//逐字检查</span></div><div class="line">        <span class="keyword">long</span> maxLoc = <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> lineNum = <span class="number">0</span>;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; lines.count; j ++)</div><div class="line">        &#123;<span class="comment">//获取对应字符所在CTLine的index</span></div><div class="line">            <span class="built_in">CFRange</span> range = ranges[j];</div><div class="line">            maxLoc = range.location + range.length <span class="number">-1</span>;</div><div class="line">            <span class="keyword">if</span> (i &lt;= maxLoc)</div><div class="line">            &#123;</div><div class="line">                lineNum = j;</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="built_in">CTLineRef</span> line = (__bridge <span class="built_in">CTLineRef</span>)lines[lineNum];<span class="comment">//取到字符对应的CTLine</span></div><div class="line">        <span class="built_in">CGPoint</span> origin = origins[lineNum];<span class="comment">//获得字符对应的CTLine的原点</span></div><div class="line">        <span class="built_in">CGRect</span> <span class="built_in">CTRunFrame</span> = [<span class="keyword">self</span> frameForCTRunWithIndex:i <span class="built_in">CTLine</span>:line origin:origin];<span class="comment">//计算对应字符的frame</span></div><div class="line">        <span class="keyword">if</span> ([<span class="keyword">self</span> isFrame:<span class="built_in">CTRunFrame</span> containsPoint:location])</div><div class="line">        &#123;<span class="comment">//如果点击位置在字符范围内，响应时间，跳出循环</span></div><div class="line">            <span class="built_in">NSLog</span>(<span class="string">@"您点击到了第 %d 个字符，位于第 %d 行，然而他没有响应事件。"</span>,i,lineNum + <span class="number">1</span>);<span class="comment">//点击到文字，然而没有响应的处理。可以做其他处理</span></div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"您没有点击到文字"</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="comment">///字符frame计算</span></div><div class="line"><span class="comment">/*</span></div><div class="line"> 返回索引字符的frame</div><div class="line"></div><div class="line"> index：索引</div><div class="line"> line：索引字符所在CTLine</div><div class="line"> origin：line的起点</div><div class="line">*/</div><div class="line">-(<span class="built_in">CGRect</span>)frameForCTRunWithIndex:(<span class="built_in">NSInteger</span>)index</div><div class="line">                         <span class="built_in">CTLine</span>:(<span class="built_in">CTLineRef</span>)line</div><div class="line">                         origin:(<span class="built_in">CGPoint</span>)origin</div><div class="line">&#123;</div><div class="line">    <span class="built_in">CGFloat</span> offsetX = <span class="built_in">CTLineGetOffsetForStringIndex</span>(line, index, <span class="literal">NULL</span>);<span class="comment">//获取字符起点相对于CTLine的原点的偏移量</span></div><div class="line">    <span class="built_in">CGFloat</span> offsexX2 = <span class="built_in">CTLineGetOffsetForStringIndex</span>(line, index + <span class="number">1</span>, <span class="literal">NULL</span>);<span class="comment">//获取下一个字符的偏移量，两者之间即为字符X范围</span></div><div class="line">    offsetX += origin.x;</div><div class="line">    offsexX2 += origin.x;<span class="comment">//坐标转换，将点的CTLine坐标转换至CoreText坐标</span></div><div class="line">    <span class="built_in">CGFloat</span> offsetY = origin.y;<span class="comment">//取到CTLine的起点Y</span></div><div class="line">    <span class="built_in">CGFloat</span> lineAscent;<span class="comment">//初始化上下边距的变量</span></div><div class="line">    <span class="built_in">CGFloat</span> lineDescent;</div><div class="line">    <span class="built_in">NSArray</span> * runs = (__bridge <span class="built_in">NSArray</span> *)<span class="built_in">CTLineGetGlyphRuns</span>(line);<span class="comment">//获取所有CTRun</span></div><div class="line">    <span class="built_in">CTRunRef</span> runCurrent;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; runs.count; k ++) &#123;<span class="comment">//获取当前点击的CTRun</span></div><div class="line">        <span class="built_in">CTRunRef</span> run = (__bridge <span class="built_in">CTRunRef</span>)runs[k];</div><div class="line">        <span class="built_in">CFRange</span> range = <span class="built_in">CTRunGetStringRange</span>(run);<span class="comment">//获得CTRun在富文本中的范围</span></div><div class="line">        <span class="built_in">NSRange</span> rangeOC = <span class="built_in">NSMakeRange</span>(range.location, range.length);</div><div class="line">        <span class="keyword">if</span> ([<span class="keyword">self</span> isIndex:index inRange:rangeOC]) &#123;</div><div class="line">            runCurrent = run;</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="built_in">CTRunGetTypographicBounds</span>(runCurrent, <span class="built_in">CFRangeMake</span>(<span class="number">0</span>, <span class="number">0</span>), &amp;lineAscent, &amp;lineDescent, <span class="literal">NULL</span>);<span class="comment">//获得对应CTRun的尺寸信息</span></div><div class="line">    offsetY -= lineDescent;</div><div class="line">    <span class="built_in">CGFloat</span> height = lineAscent + lineDescent;</div><div class="line">    <span class="keyword">return</span> <span class="built_in">CGRectMake</span>(offsetX, offsetY, offsexX2 - offsetX, height);<span class="comment">//返回一个字符的Frame</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">CTLineGetOffsetForStringIndex</span>(,,)</div></pre></td></tr></table></figure>
+<blockquote>
+<p>获取一行文字中，指定charIndex字符相对x原点的偏移量，返回值与第三个参数同为一个值。如果charIndex超出一行的字符长度则反回最大长度结束位置的偏移量，如一行文字共有17个字符，哪么返回的是第18个字符的起始偏移，即第17个偏移+第17个字符占有的宽度=第18个起始位置的偏移。因此想求一行字符所占的像素长度时，就可以使用此函数，将charIndex设置为大于字符长度即可。  </p>
+</blockquote>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">///范围检测</span></div><div class="line">-(<span class="built_in">BOOL</span>)isIndex:(<span class="built_in">NSInteger</span>)index inRange:(<span class="built_in">NSRange</span>)range</div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span> ((index &lt;= range.location + range.length - <span class="number">1</span>) &amp;&amp; (index &gt;= range.location)) &#123;</div><div class="line">        <span class="keyword">return</span> <span class="literal">YES</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="literal">NO</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="CoreText实现图文混排之文字环绕及点击算法"><a href="#CoreText实现图文混排之文字环绕及点击算法" class="headerlink" title="CoreText实现图文混排之文字环绕及点击算法"></a>CoreText实现图文混排之文字环绕及点击算法</h3><p>整体代码  </p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">CoreTextV</span> ()</span></div><div class="line">&#123;</div><div class="line">    <span class="built_in">CTFrameRef</span> _frame;</div><div class="line">    <span class="built_in">NSInteger</span> _length;</div><div class="line">    <span class="built_in">CGRect</span> _imgFrm;</div><div class="line">    <span class="built_in">NSMutableArray</span> * arrText;</div><div class="line">&#125;</div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">CoreTextV</span></span></div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)drawRect:(<span class="built_in">CGRect</span>)rect</div><div class="line">&#123;</div><div class="line">    [<span class="keyword">super</span> drawRect:rect];</div><div class="line">    <span class="built_in">CGContextRef</span> context = <span class="built_in">UIGraphicsGetCurrentContext</span>();</div><div class="line">    <span class="built_in">CGContextSetTextMatrix</span>(context, <span class="built_in">CGAffineTransformIdentity</span>);</div><div class="line">    <span class="built_in">CGContextTranslateCTM</span>(context, <span class="number">0</span>, <span class="keyword">self</span>.bounds.size.height);</div><div class="line">    <span class="built_in">CGContextScaleCTM</span>(context, <span class="number">1.0</span>f, <span class="number">-1.0</span>f);</div><div class="line">    arrText = [<span class="built_in">NSMutableArray</span> array];</div><div class="line">    <span class="built_in">NSMutableAttributedString</span> * attributedStr = [[<span class="built_in">NSMutableAttributedString</span> alloc] initWithString:<span class="string">@"123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890"</span>];</div><div class="line">    [attributedStr addAttribute:<span class="built_in">NSForegroundColorAttributeName</span> value:[<span class="built_in">UIColor</span> whiteColor] range:<span class="built_in">NSMakeRange</span>(<span class="number">0</span>, attributedStr.length)];</div><div class="line">    <span class="built_in">CTRunDelegateCallbacks</span> callBacks;</div><div class="line">    memset(&amp;callBacks, <span class="number">0</span>, <span class="keyword">sizeof</span>(<span class="built_in">CTRunDelegateCallbacks</span>));</div><div class="line">    callBacks.version = kCTRunDelegateVersion1;</div><div class="line">    callBacks.getAscent = ascentCallBacks;</div><div class="line">    callBacks.getDescent = descentCallBacks;</div><div class="line">    callBacks.getWidth = widthCallBacks;</div><div class="line">    <span class="built_in">NSDictionary</span> * dicPic = @&#123;<span class="string">@"height"</span> : @<span class="number">90</span>, <span class="string">@"width"</span> : @<span class="number">160</span>&#125;;</div><div class="line">    <span class="built_in">CTRunDelegateRef</span> delegate = <span class="built_in">CTRunDelegateCreate</span>(&amp;callBacks, (__bridge <span class="keyword">void</span> *)dicPic);</div><div class="line">    <span class="keyword">unichar</span> placeHolder = <span class="number">0xFFFC</span>;</div><div class="line">    <span class="built_in">NSString</span> * placeHolderStr = [<span class="built_in">NSString</span> stringWithCharacters:&amp;placeHolder length:<span class="number">1</span>];</div><div class="line">    <span class="built_in">NSMutableAttributedString</span> * placeHolderAttrStr = [[<span class="built_in">NSMutableAttributedString</span> alloc] initWithString:placeHolderStr];</div><div class="line">    <span class="built_in">CFAttributedStringSetAttribute</span>((<span class="built_in">CFMutableAttributedStringRef</span>)placeHolderAttrStr, <span class="built_in">CFRangeMake</span>(<span class="number">0</span>, <span class="number">1</span>), kCTRunDelegateAttributeName, delegate);</div><div class="line">    <span class="built_in">CFRelease</span>(delegate);</div><div class="line">    [attributedStr insertAttributedString:placeHolderAttrStr atIndex:<span class="number">300</span>];</div><div class="line">    <span class="built_in">NSDictionary</span> * activeAttr = @&#123;<span class="built_in">NSForegroundColorAttributeName</span> : [<span class="built_in">UIColor</span> redColor],<span class="string">@"click"</span> : <span class="built_in">NSStringFromSelector</span>(<span class="keyword">@selector</span>(click))&#125;;</div><div class="line">    [attributedStr addAttributes:activeAttr range:<span class="built_in">NSMakeRange</span>(<span class="number">100</span>, <span class="number">30</span>)];</div><div class="line">    [attributedStr addAttributes:activeAttr range:<span class="built_in">NSMakeRange</span>(<span class="number">400</span>, <span class="number">100</span>)];</div><div class="line">    </div><div class="line">    <span class="built_in">CTFramesetterRef</span> frameSetter = <span class="built_in">CTFramesetterCreateWithAttributedString</span>((<span class="built_in">CFAttributedStringRef</span>)attributedStr);</div><div class="line">    <span class="comment">//只要在这个地方传入的path中将特殊区域排除我们获得的frame就不包含该区域，从而绘制的文本也不会在该区域中绘制。</span></div><div class="line">    <span class="built_in">UIBezierPath</span> * path = [<span class="built_in">UIBezierPath</span> bezierPathWithRect:<span class="keyword">self</span>.bounds];</div><div class="line">    <span class="built_in">UIBezierPath</span> * cirP = [<span class="built_in">UIBezierPath</span> bezierPathWithOvalInRect:<span class="built_in">CGRectMake</span>(<span class="number">100</span>, <span class="number">100</span>, <span class="number">100</span>, <span class="number">200</span>)];</div><div class="line">    [path appendPath:cirP];</div><div class="line">    _length = attributedStr.length;</div><div class="line">    _frame = <span class="built_in">CTFramesetterCreateFrame</span>(frameSetter, <span class="built_in">CFRangeMake</span>(<span class="number">0</span>, _length), path.CGPath, <span class="literal">NULL</span>);</div><div class="line">    <span class="built_in">CTFrameDraw</span>(_frame, context);</div><div class="line">    </div><div class="line">    <span class="built_in">UIImage</span> * image = [<span class="built_in">UIImage</span> imageNamed:<span class="string">@"bd_logo1.jpeg"</span>];</div><div class="line">    [<span class="keyword">self</span> handleActiveRectWithFrame:_frame];</div><div class="line">    <span class="built_in">CGContextDrawImage</span>(context, _imgFrm, image.CGImage);</div><div class="line">    </div><div class="line">    <span class="built_in">CGContextDrawImage</span>(context, cirP.bounds, [[<span class="built_in">UIImage</span> imageNamed:<span class="string">@"bd_logo1.jpeg"</span>] dw_ClipImageWithPath:cirP mode:DWContentModeScaleAspectFill].CGImage);</div><div class="line">    <span class="built_in">CFRelease</span>(_frame);</div><div class="line">    <span class="built_in">CFRelease</span>(frameSetter);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="built_in">CGFloat</span> ascentCallBacks(<span class="keyword">void</span> * ref)</div><div class="line">&#123;</div><div class="line">    <span class="keyword">return</span> [(<span class="built_in">NSNumber</span> *)[(__bridge <span class="built_in">NSDictionary</span> *)ref valueForKey:<span class="string">@"height"</span>] floatValue];</div><div class="line">&#125;</div><div class="line"><span class="keyword">static</span> <span class="built_in">CGFloat</span> descentCallBacks(<span class="keyword">void</span> * ref)</div><div class="line">&#123;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"><span class="keyword">static</span> <span class="built_in">CGFloat</span> widthCallBacks(<span class="keyword">void</span> * ref)</div><div class="line">&#123;</div><div class="line">    <span class="keyword">return</span> [(<span class="built_in">NSNumber</span> *)[(__bridge <span class="built_in">NSDictionary</span> *)ref valueForKey:<span class="string">@"width"</span>] floatValue];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)handleActiveRectWithFrame:(<span class="built_in">CTFrameRef</span>)frame</div><div class="line">&#123;</div><div class="line">    <span class="built_in">NSArray</span> * arrLines = (<span class="built_in">NSArray</span> *)<span class="built_in">CTFrameGetLines</span>(frame);</div><div class="line">    <span class="built_in">NSInteger</span> count = [arrLines count];</div><div class="line">    <span class="built_in">CGPoint</span> points[count];</div><div class="line">    <span class="built_in">CTFrameGetLineOrigins</span>(frame, <span class="built_in">CFRangeMake</span>(<span class="number">0</span>, <span class="number">0</span>), points);</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; count; i ++)</div><div class="line">    &#123;</div><div class="line">        <span class="built_in">CTLineRef</span> line = (__bridge <span class="built_in">CTLineRef</span>)arrLines[i];</div><div class="line">        <span class="built_in">NSArray</span> * arrGlyphRun = (<span class="built_in">NSArray</span> *)<span class="built_in">CTLineGetGlyphRuns</span>(line);</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; arrGlyphRun.count; j ++)</div><div class="line">        &#123;</div><div class="line">            <span class="built_in">CTRunRef</span> run = (__bridge <span class="built_in">CTRunRef</span>)arrGlyphRun[j];</div><div class="line">            <span class="built_in">NSDictionary</span> * attributes = (<span class="built_in">NSDictionary</span> *)<span class="built_in">CTRunGetAttributes</span>(run);</div><div class="line">            <span class="built_in">CTRunDelegateRef</span> delegate = (__bridge <span class="built_in">CTRunDelegateRef</span>)[attributes valueForKey:(<span class="keyword">id</span>)kCTRunDelegateAttributeName];</div><div class="line">            <span class="built_in">CGPoint</span> point = points[i];</div><div class="line">            <span class="keyword">if</span> (delegate == <span class="literal">nil</span>)</div><div class="line">            &#123;</div><div class="line">                <span class="built_in">NSString</span> * string = attributes[<span class="string">@"click"</span>];</div><div class="line">                <span class="keyword">if</span> (string)</div><div class="line">                &#123;</div><div class="line">                    [arrText addObject:[<span class="built_in">NSValue</span> valueWithCGRect:[<span class="keyword">self</span> getLocWithFrame:frame <span class="built_in">CTLine</span>:line <span class="built_in">CTRun</span>:run origin:point]]];</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">continue</span>;</div><div class="line">            &#125;</div><div class="line">            <span class="built_in">NSDictionary</span> * metaDic = <span class="built_in">CTRunDelegateGetRefCon</span>(delegate);</div><div class="line">            <span class="keyword">if</span> (![metaDic isKindOfClass:[<span class="built_in">NSDictionary</span> <span class="keyword">class</span>]])</div><div class="line">            &#123;</div><div class="line">                <span class="keyword">continue</span>;</div><div class="line">            &#125;</div><div class="line">            _imgFrm = [<span class="keyword">self</span> getLocWithFrame:frame <span class="built_in">CTLine</span>:line <span class="built_in">CTRun</span>:run origin:point];</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="built_in">CGRect</span>)getLocWithFrame:(<span class="built_in">CTFrameRef</span>)frame <span class="built_in">CTLine</span>:(<span class="built_in">CTLineRef</span>)line <span class="built_in">CTRun</span>:(<span class="built_in">CTRunRef</span>)run origin:(<span class="built_in">CGPoint</span>)origin</div><div class="line">&#123;</div><div class="line">    <span class="built_in">CGFloat</span> ascent;</div><div class="line">    <span class="built_in">CGFloat</span> descent;</div><div class="line">    <span class="built_in">CGRect</span> boundsRun;</div><div class="line">    boundsRun.size.width = <span class="built_in">CTRunGetTypographicBounds</span>(run, <span class="built_in">CFRangeMake</span>(<span class="number">0</span>, <span class="number">0</span>), &amp;ascent, &amp;descent, <span class="literal">NULL</span>);</div><div class="line">    boundsRun.size.height = ascent + descent;</div><div class="line">    <span class="built_in">CGFloat</span> xOffset = <span class="built_in">CTLineGetOffsetForStringIndex</span>(line, <span class="built_in">CTRunGetStringRange</span>(run).location, <span class="literal">NULL</span>);</div><div class="line">    boundsRun.origin.x = origin.x + xOffset;</div><div class="line">    boundsRun.origin.y = origin.y - descent;</div><div class="line">    <span class="built_in">CGPathRef</span> path = <span class="built_in">CTFrameGetPath</span>(frame);</div><div class="line">    <span class="built_in">CGRect</span> colRect = <span class="built_in">CGPathGetBoundingBox</span>(path);</div><div class="line">    <span class="built_in">CGRect</span> deleteBounds = <span class="built_in">CGRectOffset</span>(boundsRun, colRect.origin.x, colRect.origin.y);</div><div class="line">    <span class="keyword">return</span> deleteBounds;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="built_in">CGRect</span>)convertRectFromLoc:(<span class="built_in">CGRect</span>)rect</div><div class="line">&#123;</div><div class="line">    <span class="keyword">return</span> <span class="built_in">CGRectMake</span>(rect.origin.x, <span class="keyword">self</span>.bounds.size.height - rect.origin.y - rect.size.height, rect.size.width, rect.size.height);</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="built_in">CGPoint</span>)systemPointFromScreenPoint:(<span class="built_in">CGPoint</span>)origin</div><div class="line">&#123;</div><div class="line">    <span class="keyword">return</span> <span class="built_in">CGPointMake</span>(origin.x, <span class="keyword">self</span>.bounds.size.height - origin.y);</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)touchesBegan:(<span class="built_in">NSSet</span>&lt;<span class="built_in">UITouch</span> *&gt; *)touches withEvent:(<span class="built_in">UIEvent</span> *)event</div><div class="line">&#123;</div><div class="line">    <span class="built_in">UITouch</span> * touch = [touches anyObject];</div><div class="line">    <span class="built_in">CGPoint</span> location = [<span class="keyword">self</span> systemPointFromScreenPoint:[touch locationInView:<span class="keyword">self</span>]];</div><div class="line"><span class="comment">//    CGRect imageFrmToScreen = [self convertRectFromLoc:_imgFrm];</span></div><div class="line">    <span class="keyword">if</span> (<span class="built_in">CGRectContainsPoint</span>(_imgFrm, location))</div><div class="line">    &#123;</div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"您点击了图片"</span>);</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    &#125;</div><div class="line">    [arrText enumerateObjectsUsingBlock:^(<span class="built_in">NSValue</span> * rectV, <span class="built_in">NSUInteger</span> idx, <span class="built_in">BOOL</span> * _Nonnull stop) &#123;</div><div class="line"><span class="comment">//        CGRect textFrmToScreen = [self convertRectFromLoc:[rectV CGRectValue]];</span></div><div class="line">        <span class="keyword">if</span> (<span class="built_in">CGRectContainsPoint</span>(rectV.CGRectValue, location))</div><div class="line">        &#123;</div><div class="line">            [<span class="keyword">self</span> click];</div><div class="line">            *stop = <span class="literal">YES</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)click</div><div class="line">&#123;</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"您点击了文字"</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<p><img src="http://chuantu.biz/t5/160/1501913622x1948173751.png" alt=""><br>为什么cirP的rect是CGRectMake(100, 100, 100, 200)，这个排除的区域却在那里?原因就在于UIKit坐标系统跟CoreText坐标系统的区别。  </p>
+<p>绘制椭圆图片可以借助github上的一个工具库<a href="https://github.com/CodeWicky/-Tools" target="_blank" rel="external">DWImageUtils</a> 贴上代码 </p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div></pre></td><td class="code"><pre><div class="line">-(<span class="built_in">UIImage</span> *)dw_ClipImageWithPath:(<span class="built_in">UIBezierPath</span> *)path mode:(DWContentMode)mode</div><div class="line">&#123;</div><div class="line">    <span class="built_in">CGFloat</span> originScale = <span class="keyword">self</span>.size.width * <span class="number">1.0</span> / <span class="keyword">self</span>.size.height;</div><div class="line">    <span class="built_in">CGRect</span> boxBounds = path.bounds;</div><div class="line">    <span class="built_in">CGFloat</span> width = boxBounds.size.width;</div><div class="line">    <span class="built_in">CGFloat</span> height = width / originScale;</div><div class="line">    <span class="keyword">switch</span> (mode) &#123;</div><div class="line">        <span class="keyword">case</span> DWContentModeScaleAspectFit:</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">if</span> (height &gt; boxBounds.size.height) &#123;</div><div class="line">                height = boxBounds.size.height;</div><div class="line">                width = height * originScale;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">        <span class="keyword">case</span> DWContentModeScaleAspectFill:</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">if</span> (height &lt; boxBounds.size.height) &#123;</div><div class="line">                height = boxBounds.size.height;</div><div class="line">                width = height * originScale;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">        <span class="keyword">default</span>:</div><div class="line">            <span class="keyword">if</span> (height != boxBounds.size.height) &#123;</div><div class="line">                height = boxBounds.size.height;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">///开启上下文</span></div><div class="line">    <span class="built_in">UIGraphicsBeginImageContextWithOptions</span>(boxBounds.size, <span class="literal">NO</span>, [<span class="built_in">UIScreen</span> mainScreen].scale);</div><div class="line">    <span class="built_in">CGContextRef</span> bitmap = <span class="built_in">UIGraphicsGetCurrentContext</span>();</div><div class="line">    </div><div class="line">    <span class="comment">///归零path</span></div><div class="line">    <span class="built_in">UIBezierPath</span> * newPath = [path <span class="keyword">copy</span>];</div><div class="line">    [newPath applyTransform:<span class="built_in">CGAffineTransformMakeTranslation</span>(-path.bounds.origin.x, -path.bounds.origin.y)];</div><div class="line">    [newPath addClip];</div><div class="line">    </div><div class="line">    <span class="comment">///移动原点至图片中心</span></div><div class="line">    <span class="built_in">CGContextTranslateCTM</span>(bitmap, boxBounds.size.width / <span class="number">2.0</span>, boxBounds.size.height / <span class="number">2.0</span>);</div><div class="line">    <span class="built_in">CGContextScaleCTM</span>(bitmap, <span class="number">1.0</span>, <span class="number">-1.0</span>);</div><div class="line">    <span class="built_in">CGContextDrawImage</span>(bitmap, <span class="built_in">CGRectMake</span>(-width / <span class="number">2</span>, -height / <span class="number">2</span>, width, height), <span class="keyword">self</span>.CGImage);</div><div class="line">    </div><div class="line">    <span class="comment">///生成图片</span></div><div class="line">    <span class="built_in">UIImage</span> *newImage = <span class="built_in">UIGraphicsGetImageFromCurrentImageContext</span>();</div><div class="line">    <span class="built_in">UIGraphicsEndImageContext</span>();</div><div class="line">    </div><div class="line">    <span class="keyword">return</span> newImage;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><img src="http://chuantu.biz/t5/160/1501907720x1948173751.png" alt="">  </p>
+<p>点击事件获取<br>1、主流方式：CTLineGetStringIndexForPosition</p>
+<blockquote>
+<p>主流方式就是当前大部分基于CoreText封装的富文本展示类（包括TTTAttributedLabel、NIAttributedLabel和FTCoreTextView）中使用的方法 CTLineGetStringIndexForPosition。这个方法是获取当前点在所在文字处于当前绘制文本的索引值。事实上如果没有一些其他因素的话，能使用这个方法是最简便快捷的</p>
+<p>但是在实际使用中CTLineGetStringIndexForPosition这个方法<font color="#0000ff">获取一个字的index范围是这个字前面大概半个字开始到这个字中间的位置,从这个字的中间到这个字的后半个字就会获得下一个字的index。</font>  </p>
+<p>CTLineGetStringIndexForPosition这个方法还有另一个作用还是很好用的。这个方法最好的用处就是判断一行CTLine最多容纳多少的字符，只需把这个point的x位置调很大（超过CTFrame path的宽度）就可以了。</p>
+</blockquote>
+<p>2、遍历CTRun比较法 (代码中的写法)<br>一次遍历中拿到所有活动图片和活动文字的frame，按照点击图片的处理方式处理文字，在添加点击事件的活动文本的特征点中添加加了click(属性名随便写，不要太low就行了)这么一个属性。通过遍历CTRun将活动文本的frame算出来，并存到一个数组里面arrText。</p>
+<pre><code class="objectivec">[arrText addObject:[<span class="built_in">NSValue</span> valueWithCGRect:[<span class="keyword">self</span> getLocWithFrame:frame <span class="built_in">CTLine</span>:line <span class="built_in">CTRun</span>:run origin:point]]];
+</code></pre>
+<blockquote>
+<p>注意：文字frame不同于获取图片的frame。由于图片是在一个空白占位符上绘制文字，所以一定是以一个CTRun进行绘制的。但是第一篇文章中老司机说过，每个CTRun是所有具有相同属性的连续同行文字的集合。针对CTRun的特性，我们不难想到，文字由于可能出现两行，也有可能会活动文本的字体字号等其他属性不尽相同导致一段文字由两个CTRun进行绘制，所以不能单纯的保存一个frame，而是要以一个数组容纳他。再通过一些逻辑将不同的活动文本区别开来。</p>
+</blockquote>
+<p>参考：<br><a href="http://www.jianshu.com/p/6db3289fb05d" target="_blank" rel="external">CoreText实现图文混排</a><br><a href="http://www.jianshu.com/p/51c47329203e" target="_blank" rel="external">CoreText实现图文混排之点击事件</a><br><a href="http://www.jianshu.com/p/e154047b0f98" target="_blank" rel="external">CoreText实现图文混排之文字环绕及点击算法</a><br><a href="http://www.cnblogs.com/gatsbywang/p/4248977.html" target="_blank" rel="external">CoreText中坐标转换的一些理解</a><br><a href="http://blog.csdn.net/majiakun1/article/details/38140411" target="_blank" rel="external">CTLineRef详细介绍</a><br><a href="http://www.tuicool.com/articles/FfYjim" target="_blank" rel="external">CoreText原理及基本使用方法</a><br><a href="https://my.oschina.net/megan/blog/269042" target="_blank" rel="external">CoreText 实现图文混排</a><br><a href="https://my.oschina.net/u/2361492/blog/526814" target="_blank" rel="external">使用CoreText实现图文混排</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/08/04/跳到设置页面以及App间跳转/" rel="next" title="跳到设置页面以及App间跳转">
+                <i class="fa fa-chevron-left"></i> 跳到设置页面以及App间跳转
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1497022439403&di=2f6fd5230ee9981e7eddc6cf7e9318ea&imgtype=0&src=http%3A%2F%2Fwww.leewiart.com%2Fuserfiles%2F27314%2F65bf4cc7b5b64ea29e30516680b3dc41_thumb_250.jpg"
+               alt="王凯彬" />
+          <p class="site-author-name" itemprop="name">王凯彬</p>
+           
+              <p class="site-description motion-element" itemprop="description">iOS 学习总结 思考感悟 知识管理</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#CoreText简介"><span class="nav-number">1.</span> <span class="nav-text">CoreText简介</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#两坐标系中point和frame的变换"><span class="nav-number">1.1.</span> <span class="nav-text">两坐标系中point和frame的变换</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现点击事件"><span class="nav-number">2.</span> <span class="nav-text">实现点击事件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#整体代码"><span class="nav-number">2.1.</span> <span class="nav-text">整体代码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分段解析"><span class="nav-number">2.2.</span> <span class="nav-text">分段解析</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CoreText实现图文混排之文字环绕及点击算法"><span class="nav-number">3.</span> <span class="nav-text">CoreText实现图文混排之文字环绕及点击算法</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">王凯彬</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
