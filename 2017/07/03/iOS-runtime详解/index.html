@@ -93,13 +93,13 @@
 <meta property="og:url" content="http://yoursite.com/2017/07/03/iOS-runtime详解/index.html">
 <meta property="og:site_name" content="王凯彬">
 <meta property="og:description" content="引导runtime是运行时，对于从事iOS开发，想要深入学习OC的人，runtime是必须熟悉掌握的东西。 runtime的概念Objective-C 是基于 C 的，它为 C 添加了面向对象的特性。它将很多静态语言在编译和链接时期做的事放到了runtime 运行时来处理，可以说runtime是我们Objective-C幕后工作者。  runtime（简称运行时），是一套 纯C(C和汇编写的) 的">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2017/6/13/2d4ed95fd3f04b7217f3f769eafdb8c6">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2017/6/13/cf4ae090f0098668a85a731685e2d533">
-<meta property="og:updated_time" content="2017-07-07T15:43:47.000Z">
+<meta property="og:image" content="http://oui2ar2u7.bkt.clouddn.com/2d4ed95fd3f04b7217f3f769eafdb8c6.jpeg">
+<meta property="og:image" content="http://oui2ar2u7.bkt.clouddn.com/cf4ae090f0098668a85a731685e2d533.jpeg">
+<meta property="og:updated_time" content="2017-08-12T10:13:53.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS runtime详解">
 <meta name="twitter:description" content="引导runtime是运行时，对于从事iOS开发，想要深入学习OC的人，runtime是必须熟悉掌握的东西。 runtime的概念Objective-C 是基于 C 的，它为 C 添加了面向对象的特性。它将很多静态语言在编译和链接时期做的事放到了runtime 运行时来处理，可以说runtime是我们Objective-C幕后工作者。  runtime（简称运行时），是一套 纯C(C和汇编写的) 的">
-<meta name="twitter:image" content="https://user-gold-cdn.xitu.io/2017/6/13/2d4ed95fd3f04b7217f3f769eafdb8c6">
+<meta name="twitter:image" content="http://oui2ar2u7.bkt.clouddn.com/2d4ed95fd3f04b7217f3f769eafdb8c6.jpeg">
 
 
 
@@ -456,13 +456,13 @@
 </li>
 <li><p>在Objective-C中调用一个方法，其实是向一个对象发送消息，查找消息的唯一依据是selector的名字。利用Objective-C的动态特性，可以实现在运行时偷换selector对应的方法实现，达到给方法挂钩的目的</p>
 </li>
-<li><p>每个类都有一个方法列表，存放着方法的名字和方法实现的映射关系，selector的本质其实就是方法名，IMP有点类似函数指针，指向具体的Method实现，通过selector就可以找到对应的IMP。<br><img src="https://user-gold-cdn.xitu.io/2017/6/13/2d4ed95fd3f04b7217f3f769eafdb8c6" alt=""></p>
+<li><p>每个类都有一个方法列表，存放着方法的名字和方法实现的映射关系，selector的本质其实就是方法名，IMP有点类似函数指针，指向具体的Method实现，通过selector就可以找到对应的IMP。<br><img src="http://oui2ar2u7.bkt.clouddn.com/2d4ed95fd3f04b7217f3f769eafdb8c6.jpeg" alt=""></p>
 </li>
 <li><p>交换方法的几种实现方式  </p>
 <ul>
 <li>利用 method_exchangeImplementations 交换两个方法的实现  </li>
 <li>利用 class_replaceMethod 替换方法的实现  </li>
-<li>利用 method_setImplementation 来直接设置某个方法的IMP。<br><img src="https://user-gold-cdn.xitu.io/2017/6/13/cf4ae090f0098668a85a731685e2d533" alt=""> </li>
+<li>利用 method_setImplementation 来直接设置某个方法的IMP。<br><img src="http://oui2ar2u7.bkt.clouddn.com/cf4ae090f0098668a85a731685e2d533.jpeg" alt=""> </li>
 </ul>
 </li>
 </ul>
