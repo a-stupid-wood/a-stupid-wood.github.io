@@ -76,8 +76,6 @@
 
 
 
-  
-
 
   <link rel="alternate" href="/atom.xml" title="Kerwin" type="application/atom+xml" />
 
@@ -98,7 +96,7 @@
 <meta property="og:site_name" content="Kerwin">
 <meta property="og:description" content="1.Object-c的类可以多重继承么？可以实现多个接口么？Category是什么？重写一个类的方式是用继承好还是分类好？为什么？    答：Object-c的类不可以多重继承；可以实现多个接口，通过实现多个接口可以完成C++的多重继承；Category是类别，一般情况用分类好，用Category去重写类的方法，仅对本Category有效，不会影响到其他类与原有类的关系。  2、#import跟#">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-10-19T11:26:54.597Z">
+<meta property="og:updated_time" content="2017-10-19T13:20:21.989Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="面试题一">
 <meta name="twitter:description" content="1.Object-c的类可以多重继承么？可以实现多个接口么？Category是什么？重写一个类的方式是用继承好还是分类好？为什么？    答：Object-c的类不可以多重继承；可以实现多个接口，通过实现多个接口可以完成C++的多重继承；Category是类别，一般情况用分类好，用Category去重写类的方法，仅对本Category有效，不会影响到其他类与原有类的关系。  2、#import跟#">
@@ -408,7 +406,7 @@
 <p><strong>单例模式</strong>：说白了就是一个类不通过alloc方式创建对象，而是用一个静态方法返回这个类的对象。系统只需要拥有一个的全局对象，这样有利于我们协调系统整体的行为，比如想获得[UIApplication sharedApplication];任何地方调用都可以得到 UIApplication的对象，这个对象是全局唯一的。  </p>
 <p><strong>观察者模式</strong>： 当一个物体发生变化时，会通知所有观察这个物体的观察者让其做出反应。实现起来无非就是把所有观察者的对象给这个物体，当这个物体的发生改变，就会调用遍历所有观察者的对象调用观察者的方法从而达到通知观察者的目的。</p>
 <p>工厂模式：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">public class Factory&#123;</div><div class="line">  public static Samplecreator(int which)&#123;</div><div class="line">    if(which == 1)</div><div class="line">      return new SampleA();</div><div class="line">    elseif(which == 2)</div><div class="line">      return new SampleB();</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">public class Factory&#123;</div><div class="line">  public static Samplecreator(int which)&#123;</div><div class="line">    if(which == 1)</div><div class="line">      return new SampleA();</div><div class="line">    elseif(which == 2)</div><div class="line">      return new SampleB();</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </blockquote>
 <p>15.浅复制和深复制的区别?</p>
 <blockquote>
@@ -430,7 +428,7 @@
 <p>19.什么是KVO和KVC?  </p>
 <blockquote>
 <p>答：KVC:键–值编码是一种间接访问对象的属性使用字符串来标识属性，而不是通过调用存取方法，直接或通过实例变量访问的机制。<br>KVO:键值观察机制，提供了观察某一属性变化的方法，极大的简化了代码。具体使用可以参考如下代码自定义的一个button,对于按钮点击变化状态的的监控。  </p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">[<span class="keyword">self</span> addObserver:<span class="keyword">self</span> forKeyPath:<span class="string">@"highlighted"</span> options:<span class="number">0</span> context:<span class="literal">nil</span>];</div><div class="line"><span class="meta">#pragma mark - KVO</span></div><div class="line">- (<span class="keyword">void</span>)observeValueForKeyPath:(<span class="built_in">NSString</span> *)keyPath ofObject:(<span class="keyword">id</span>)object change:(<span class="built_in">NSDictionary</span>&lt;<span class="built_in">NSKeyValueChangeKey</span>,<span class="keyword">id</span>&gt; *)change context:(<span class="keyword">void</span> *)context</div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span> ([keyPath isEqualToString:<span class="string">@"highlighted"</span>])</div><div class="line">    &#123;</div><div class="line">        [<span class="keyword">self</span> setNeedsDisplay];</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">[<span class="keyword">self</span> addObserver:<span class="keyword">self</span> forKeyPath:<span class="string">@"highlighted"</span> options:<span class="number">0</span> context:<span class="literal">nil</span>];</div><div class="line"><span class="meta">#pragma mark - KVO</span></div><div class="line">- (<span class="keyword">void</span>)observeValueForKeyPath:(<span class="built_in">NSString</span> *)keyPath ofObject:(<span class="keyword">id</span>)object change:(<span class="built_in">NSDictionary</span>&lt;<span class="built_in">NSKeyValueChangeKey</span>,<span class="keyword">id</span>&gt; *)change context:(<span class="keyword">void</span> *)context</div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span> ([keyPath isEqualToString:<span class="string">@"highlighted"</span>])</div><div class="line">    &#123;</div><div class="line">        [<span class="keyword">self</span> setNeedsDisplay];</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </blockquote>
 <p>对于系统是根据keypath去取的到相应的值发生改变，理论上来说是和kvc机制的道理是一样的。<br>对于kvc机制如何通过key寻找到value：当通过KVC调用对象时，比如：<code>[self valueForKey:@”someKey”]</code>时，程序会自动试图通过几种不同的方式解析这个调用。首先查找对象是否带有someKey这个方法，如果没找到，会继续查找对象是否带有someKey这个实例变量(iVar)，如果还没有找到，程序会继续试图调用 <code>-(id)valueForUndefinedKey:</code>这个方法。如果这个方法还是没有被实现的话，程序会抛出一个NSUndefinedKeyException异常错误。<br>注：Key-Value 代码查找方法的时候，不仅仅会查找someKey这个方法，还会查找getsomeKey这个方法，前面加一个get，或者_someKey以及_getsomeKey这几种形式。同时，查找实例变量的时候也会不仅仅查找someKey这个变量，也会查找_someKey这个变量是否存在。<br>设计valueForUndefinedKey:方法的主要目的是当你使用-(id)valueForKey方法从对象中请求值时，对象能够在错误发生前，有最后的机会响应这个请求。<br>因为我们知道button却是存在一个highlighted实例变量.因此为何上面我们只是add一个相关的keypath就行了，可以按照kvc查找的逻辑理解，就说的过去了。</p>
 <p>20.代理的作用?</p>
@@ -526,7 +524,7 @@
 <p>43.什么是谓词?</p>
 <blockquote>
 <p>答：谓词是通过NSPredicate，是通过给定的逻辑条件作为约束条件，完成对数据的筛选。  </p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">predicate =[<span class="built_in">NSPredicate</span> predicateWithFormat:<span class="string">@"customerID == %d"</span>,n];</div><div class="line">a = [customers filteredArrayUsingPredicate:predicate];</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">predicate =[<span class="built_in">NSPredicate</span> predicateWithFormat:<span class="string">@"customerID == %d"</span>,n];</div><div class="line">a = [customers filteredArrayUsingPredicate:predicate];</div></pre></td></tr></table></figure>
 </blockquote>
 <p>44.和coredata一起有哪几种持久化存储机制?  </p>
 <blockquote>
@@ -535,12 +533,12 @@
 <p>45.谈谈对Block 的理解?并写出一个使用Block执行UIVew动画?  </p>
 <blockquote>
 <p>答：Block是可以获取其他函数局部变量的匿名函数，其不但方便开发，并且可以大幅提高应用的执行效率(多核心CPU可直接处理Block指令)  </p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">[<span class="built_in">UIView</span> transitionWithView:<span class="keyword">self</span>.view duration:<span class="number">0.2</span> options:<span class="built_in">UIViewAnimationOptionTransitionFlipFromLeft</span> animations:^&#123;</div><div class="line">    [[blueViewController view] removeFromSuperview];</div><div class="line">    [[<span class="keyword">self</span> view] insertSubview:yellowViewController.view atIndex:<span class="number">0</span>];</div><div class="line">&#125;</div><div class="line">completion:<span class="literal">nil</span>];</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[<span class="built_in">UIView</span> transitionWithView:<span class="keyword">self</span>.view duration:<span class="number">0.2</span> options:<span class="built_in">UIViewAnimationOptionTransitionFlipFromLeft</span> animations:^&#123;</div><div class="line">    [[blueViewController view] removeFromSuperview];</div><div class="line">    [[<span class="keyword">self</span> view] insertSubview:yellowViewController.view atIndex:<span class="number">0</span>];</div><div class="line">&#125;</div><div class="line">completion:<span class="literal">nil</span>];</div></pre></td></tr></table></figure>
 </blockquote>
 <p>46.写出上面代码的Block的定义。</p>
 <blockquote>
 <p>答：</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">typedef</span> <span class="keyword">void</span>(^animations)(<span class="keyword">void</span>);</div><div class="line"><span class="keyword">typedef</span> <span class="keyword">void</span>(^completion)(<span class="built_in">BOOL</span> finished);</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">typedef</span> <span class="keyword">void</span>(^animations)(<span class="keyword">void</span>);</div><div class="line"><span class="keyword">typedef</span> <span class="keyword">void</span>(^completion)(<span class="built_in">BOOL</span> finished);</div></pre></td></tr></table></figure>
 </blockquote>
 <p>47.做过的项目是否涉及网络访问功能，使用什么对象完成网络功能?</p>
 <blockquote>
@@ -570,18 +568,18 @@
 <blockquote>
 <p>答: Objective-C是对C语言的扩展，block的实现是基于指针和函数指针。<br>从计算语言的发展，最早的goto，高级语言的指针，到面向对象语言的block，从机器的思维，一步步接近人的思维，以方便开发人员更为高效、直接的描述出现实的逻辑(需求)。  </p>
 <p>使用实例<br>cocoaTouch框架下动画效果的Block的调用<br>使用typed声明block</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">typedef</span> <span class="keyword">void</span>(^didFinishBlock)(<span class="built_in">NSObject</span>?*ob);<span class="comment">//这就声明了一个didFinishBlock类型的block</span></div><div class="line">&gt;</div></pre></td></tr></table></figure>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">typedef</span> <span class="keyword">void</span>(^didFinishBlock)(<span class="built_in">NSObject</span>?*ob);<span class="comment">//这就声明了一个didFinishBlock类型的block</span></div></pre></td></tr></table></figure>
 <p>然后便可用  </p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>,<span class="keyword">copy</span>)didFinishBlock finishBlock;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>,<span class="keyword">copy</span>)didFinishBlock finishBlock;</div></pre></td></tr></table></figure>
 <p>声明一个blokc对象，注意对象属性设置为copy，接到block 参数时，便会自动复制一份。<br>__block是一种特殊类型，使用该关键字声明的局部变量，可以被block所改变，并且其在原函数中的值会被改变</p>
 </blockquote>
 <p>54.关于block  </p>
 <blockquote>
 <p>答：<br>1). 使用block和使用delegate完成委托模式有什么优点?<br>首先要了解什么是委托模式，委托模式在iOS中大量应用，其在设计模式中是适配器模式中的对象适配器，Objective-C中使用id类型指向一切对象，使委托模式更为简洁。了解委托模式的细节：<br>iOS设计模式—-委托模式<br>使用block实现委托模式，其优点是回调的block代码块定义在委托对象函数内部，使代码更为紧凑;适配对象不再需要实现具体某个protocol，代码更为简洁。  </p>
 <p>2). 多线程与block<br>GCD与Block<br>使用 dispatch_async 系列方法，可以以指定的方式执行block<br>GCD编程实例<br>dispatch_async的完整定义</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">void</span> <span class="built_in">dispatch_async</span>(<span class="built_in">dispatch_queue_t</span> queue,dispatch_block_t block);</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">void</span> <span class="built_in">dispatch_async</span>(<span class="built_in">dispatch_queue_t</span> queue,dispatch_block_t block);</div></pre></td></tr></table></figure>
 <p>功能：在指定的队列里提交一个异步执行的block，不阻塞当前线程,通过queue来控制block执行的线程。主线程执行前文定义的 finishBlock对象  </p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">dispatch_async</span>(dispatch_get_main_queue(),^(<span class="keyword">void</span>)&#123;</div><div class="line">    finishBlock();</div><div class="line">&#125;);</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">dispatch_async</span>(dispatch_get_main_queue(),^(<span class="keyword">void</span>)&#123;</div><div class="line">    finishBlock();</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
 </blockquote>
 <p>55.谈谈Object-C的MRC内存管理方式及过程？</p>
 <blockquote>
@@ -590,7 +588,7 @@
 <p>56.Object-C有私有方法吗？私有变量呢？  </p>
 <blockquote>
 <p>答: objective-c – 类里面的方法只有两种, 静态方法和实例方法. 这似乎就不是完整的面向对象了,按照OO的原则就是一个对象只暴露有用的东西. 如果没有了私有方法的话, 对于一些小范围的代码重用就不那么顺手了. 在类里面声名一个私有方法  </p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">Controller</span>:<span class="title">NSObject</span></span></div><div class="line">&#123;</div><div class="line">    <span class="built_in">NSString</span> *something;</div><div class="line">&#125;</div><div class="line">+ (<span class="keyword">void</span>)thisIsAStaticMethod;</div><div class="line">– (<span class="keyword">void</span>)thisIsAnInstanceMethod;</div><div class="line"><span class="keyword">@end</span></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">Controller</span>(<span class="title">private</span>)</span></div><div class="line">-(<span class="keyword">void</span>)thisIsAPrivateMethod;</div><div class="line"><span class="keyword">@end</span></div><div class="line">&gt;</div></pre></td></tr></table></figure>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">Controller</span>:<span class="title">NSObject</span></span></div><div class="line">&#123;</div><div class="line">    <span class="built_in">NSString</span> *something;</div><div class="line">&#125;</div><div class="line">+ (<span class="keyword">void</span>)thisIsAStaticMethod;</div><div class="line">– (<span class="keyword">void</span>)thisIsAnInstanceMethod;</div><div class="line"><span class="keyword">@end</span></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">Controller</span>(<span class="title">private</span>)</span></div><div class="line">-(<span class="keyword">void</span>)thisIsAPrivateMethod;</div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
 <p>@private可以用来修饰私有变量<br>在Objective‐C中，所有实例变量默认都是私有的，所有实例方法默认都是公有的</p>
 </blockquote>
 <p>57.Object-C有多继承吗？没有的话用什么代替？cocoa 中所有的类都是NSObject 的子类  </p>
@@ -628,15 +626,15 @@
 <p>64.写一个”标准”宏MIN ，这个宏输入两个参数并返回较小的一个。</p>
 <blockquote>
 <p><code>#define MIN(A,B)（(A）&lt;= (B) ? (A):(B))</code><br>这个测试是为下面的目的而设的：<br>标识#define在宏中应用的基本知识。这是很重要的，因为直到嵌入(inline)操作符变为标准C的一部分，宏是方便产生嵌入代码的唯一方法，对于嵌入式系统来说，为了能达到要求的性能，嵌入代码经常是必须的方法。三重条件操作符的知识。这个操作符存在C语言中的原因是它使得编译器能产生比 if-then-else 更优化的代码，了解这个用法是很重要的。<strong>懂得在宏中小心地把参数用括号括起来</strong>,我也用这个问题开始讨论宏的副作用，例如：当你写下面的代码时会发生什么事？  </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">least = MIN(*p++,b);</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">least = MIN(*p++,b);</div></pre></td></tr></table></figure>
 <p>结果是： </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">((*p++) &lt;= (b) ? (*p++):(b))</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">((*p++) &lt;= (b) ? (*p++):(b))</div></pre></td></tr></table></figure>
 <p>这个表达式会产生副作用，指针p会作两次++自增操作。  </p>
 </blockquote>
 <p>65.关键字const有什么含意？修饰类呢?static的作用,用于类呢?还有extern c的作用  </p>
 <blockquote>
 <p>答：<br>const 意味着”只读”，下面的声明都是什么意思？</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">const int a;</div><div class="line">int const a;</div><div class="line">const int *a;</div><div class="line">int *const a;</div><div class="line">const int * const a;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">const int a;</div><div class="line">int const a;</div><div class="line">const int *a;</div><div class="line">int *const a;</div><div class="line">const int * const a;</div></pre></td></tr></table></figure>
 <p>前两个的作用是一样的，a是一个常整型数。<br>第三个意味着a是一个指向常整型数的指针(也就是说，整型数是不可修改的，但指针可以)<br>第四个意味着a是一个指向整型数的常指针(也就是说，指针指向的整型数是可以修改的，但指针是不可以修改的)<br>最后一个意味着a是一个指向常整型数的常指针(也就是说，指针指向的整型数是不可以修改的，同时指针也是不可修改的)  </p>
 <p>结论：<br>关键字const的作用是为给读你代码的人传达非常有用的信息，实际上，声明一个参数为常量是为了告诉了用户这个参数的应用目的。<br>如果你曾花很多时间清理其它人留下的垃圾，你就会很快学会感谢这点多余的信息。（当然，懂得用const的程序员很少会留下的垃圾让别人来清理的）通过给优化器一些附加的信息，使用关键字const也许能产生更紧凑的代码。合理地使用关键字const可以使编译器很自然地保护那些不希望被改变的参数，防止其被无意的代码修改。简而言之，这样可以减少bug的出现。</p>
 <p>1).欲阻止一个变量被改变，可以使用 const 关键字。在定义该 const 变量时，通常需要对它进行初始化，因为以后就没有机会再去改变它了；<br>2).对指针来说，可以指定指针本身为 const，也可以指定指针所指的数据为 const，或二者同时指<br>定为 const；<br>3).在一个函数声明中，const 可以修饰形参，表明它是一个输入参数，在函数内部不能改变其值；<br>4).对于类的成员函数，若指定其为 const 类型，则表明其是一个常函数，不能修改类的成员变量；<br>5).对于类的成员函数，有时候必须指定其返回值为 const 类型，以使得其返回值不为“左值”。   </p>
@@ -924,6 +922,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2017/10/19/面试题二/" rel="prev" title="面试题二">
+                面试题二 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -996,7 +998,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-count">17</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
