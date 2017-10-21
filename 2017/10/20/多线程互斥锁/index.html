@@ -1,0 +1,842 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Kerwin" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="在iOS中有几种方法来解决多线程访问同一个内存地址的互斥同步问题：一、@synchronized(id anObject),(最简单的方法) 会自动对参数对象加锁，保证临界区内的代码线程安全 12345@synchronized(self) &amp;#123;    // 这段代码对其他 @synchronized(self) 都是互斥的    // self 指向同一个对象 &amp;#125;  二、NSL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="多线程互斥锁">
+<meta property="og:url" content="http://yoursite.com/2017/10/20/多线程互斥锁/index.html">
+<meta property="og:site_name" content="Kerwin">
+<meta property="og:description" content="在iOS中有几种方法来解决多线程访问同一个内存地址的互斥同步问题：一、@synchronized(id anObject),(最简单的方法) 会自动对参数对象加锁，保证临界区内的代码线程安全 12345@synchronized(self) &amp;#123;    // 这段代码对其他 @synchronized(self) 都是互斥的    // self 指向同一个对象 &amp;#125;  二、NSL">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-10-20T17:11:20.206Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="多线程互斥锁">
+<meta name="twitter:description" content="在iOS中有几种方法来解决多线程访问同一个内存地址的互斥同步问题：一、@synchronized(id anObject),(最简单的方法) 会自动对参数对象加锁，保证临界区内的代码线程安全 12345@synchronized(self) &amp;#123;    // 这段代码对其他 @synchronized(self) 都是互斥的    // self 指向同一个对象 &amp;#125;  二、NSL">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"always","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/10/20/多线程互斥锁/"/>
+
+
+
+
+
+  <title> 多线程互斥锁 | Kerwin </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?931533eabc03369078b34713fefd96d2";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Kerwin</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">个人技术博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/20/多线程互斥锁/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Kerwin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://oui2ar2u7.bkt.clouddn.com/Roronoa_Zoro.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Kerwin">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                多线程互斥锁
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-20T22:09:13+08:00">
+                2017-10-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/10/20/多线程互斥锁/" class="leancloud_visitors" data-flag-title="多线程互斥锁">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="在iOS中有几种方法来解决多线程访问同一个内存地址的互斥同步问题："><a href="#在iOS中有几种方法来解决多线程访问同一个内存地址的互斥同步问题：" class="headerlink" title="在iOS中有几种方法来解决多线程访问同一个内存地址的互斥同步问题："></a>在iOS中有几种方法来解决多线程访问同一个内存地址的互斥同步问题：</h3><h4 id="一、-synchronized-id-anObject-最简单的方法"><a href="#一、-synchronized-id-anObject-最简单的方法" class="headerlink" title="一、@synchronized(id anObject),(最简单的方法)"></a>一、@synchronized(id anObject),(最简单的方法)</h4><blockquote>
+<p>会自动对参数对象加锁，保证临界区内的代码线程安全</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">@synchronized</span>(<span class="keyword">self</span>) </div><div class="line">&#123; </div><div class="line">   <span class="comment">// 这段代码对其他 @synchronized(self) 都是互斥的 </span></div><div class="line">   <span class="comment">// self 指向同一个对象 </span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</blockquote>
+<h4 id="二、NSLock"><a href="#二、NSLock" class="headerlink" title="二、NSLock"></a>二、NSLock</h4><blockquote>
+<p>NSLock对象实现了NSLocking protocol，包含几个方法：  </p>
+<ul>
+<li>lock，加锁</li>
+<li>unlock，解锁</li>
+<li>tryLock，尝试加锁，如果失败了，并不会阻塞线程，只是立即返回NO</li>
+<li>lockBeforeDate:，在指定的date之前暂时阻塞线程（如果没有获取锁的话），如果到期还没有获取锁，则线程被唤醒，函数立即返回NO  </li>
+</ul>
+<p>比如：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">NSLock</span> *theLock = [[<span class="built_in">NSLock</span> alloc] init]; </div><div class="line"><span class="keyword">if</span> ([theLock lock]) </div><div class="line">&#123; </div><div class="line">   <span class="comment">//do something here </span></div><div class="line">   [theLock unlock]; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</blockquote>
+<h4 id="三、NSRecursiveLock，递归锁"><a href="#三、NSRecursiveLock，递归锁" class="headerlink" title="三、NSRecursiveLock，递归锁"></a>三、NSRecursiveLock，递归锁</h4><blockquote>
+<p>NSRecursiveLock，多次调用不会阻塞已获取该锁的线程。</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">NSRecursiveLock</span> *theLock = [[<span class="built_in">NSRecursiveLock</span> alloc] init]; </div><div class="line"><span class="keyword">void</span> MyRecursiveFunction(<span class="keyword">int</span> value) </div><div class="line">&#123; </div><div class="line">   [theLock lock]; </div><div class="line">   <span class="keyword">if</span> (value != <span class="number">0</span>) &#123;</div><div class="line">       --value</div><div class="line">       MyRecursiveFunction(value); </div><div class="line">    &#125; </div><div class="line">    [theLock unlock]; </div><div class="line">&#125; </div><div class="line">MyRecursiveFunction(<span class="number">5</span>);</div></pre></td></tr></table></figure>
+</blockquote>
+<h4 id="四、NSConditionLock，条件锁"><a href="#四、NSConditionLock，条件锁" class="headerlink" title="四、NSConditionLock，条件锁"></a>四、NSConditionLock，条件锁</h4><blockquote>
+<p>NSConditionLock，条件锁，可以设置条件</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//公共部分 </span></div><div class="line"><span class="keyword">id</span> condLock = [[<span class="built_in">NSConditionLock</span> alloc] initWithCondition:NO_DATA]; </div><div class="line"><span class="comment">//线程一，生产者 </span></div><div class="line"><span class="keyword">while</span>(<span class="literal">true</span>) &#123; </div><div class="line">  [condLock lockWhenCondition:NO_DATA]; </div><div class="line">  <span class="comment">//生产数据 </span></div><div class="line">  [condLock unlockWithCondition:HAS_DATA]; </div><div class="line">&#125; </div><div class="line">  <span class="comment">//线程二，消费者 </span></div><div class="line"><span class="keyword">while</span> (<span class="literal">true</span>) </div><div class="line">&#123; </div><div class="line">  [condLock lockWhenCondition:HAS_DATA]; </div><div class="line">  <span class="comment">//消费 </span></div><div class="line">  [condLock unlockWithCondition:NO_DATA];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</blockquote>
+<h4 id="五、NSDistributedLock，分布锁"><a href="#五、NSDistributedLock，分布锁" class="headerlink" title="五、NSDistributedLock，分布锁"></a>五、NSDistributedLock，分布锁</h4><blockquote>
+<p>NSDistributedLock，分布锁，文件方式实现，可以跨进程  </p>
+<ul>
+<li>用tryLock方法获取锁。</li>
+<li>用unlock方法释放锁。  </li>
+</ul>
+<p>如果一个获取锁的进程在释放锁之前挂了，那么锁就一直得不到释放了，此时可以通过breakLock强行获取锁。<br>程序A：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">dispatch_async</span>(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, <span class="number">0</span>), ^&#123;</div><div class="line">  lock = [[<span class="built_in">NSDistributedLock</span> alloc] initWithPath:<span class="string">@"/Users/mac/Desktop/earning__"</span>];</div><div class="line">  [lock breakLock];</div><div class="line">  [lock tryLock];</div><div class="line">  sleep(<span class="number">10</span>);</div><div class="line">  [lock unlock];</div><div class="line">  <span class="built_in">NSLog</span>(<span class="string">@"appA: OK"</span>);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>程序B：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">dispatch_async</span>(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, <span class="number">0</span>), ^&#123;</div><div class="line">   lock = [[<span class="built_in">NSDistributedLock</span> alloc] initWithPath:<span class="string">@"/Users/mac/Desktop/earning__"</span>];</div><div class="line">   <span class="keyword">while</span> (![lock tryLock]) &#123;</div><div class="line">     <span class="built_in">NSLog</span>(<span class="string">@"appB: waiting"</span>);</div><div class="line">     sleep(<span class="number">1</span>);</div><div class="line">   &#125;</div><div class="line">   [lock unlock];</div><div class="line">   <span class="built_in">NSLog</span>(<span class="string">@"appB: OK"</span>);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<blockquote>
+<p>先运行程序A,然后立即运行程序B,根据打印你可以清楚的发现，当程序A刚运行的时候，程序B一直处于等待中，当大概10秒过后，程序B便打印出了appB:OK的输出，以上便实现了两上不同程序之间的互斥。/Users/mac/Desktop/earning__是一个文件或文件夹的地址，如果该文件或文件夹不存在，那么在tryLock返回YES时，会自动创建该文件/文件夹。在结束的时候该文件/文件夹会被清除，所以在选择的该路径的时候，应该选择一个不存在的路径，以防止误删了文件。</p>
+</blockquote>
+</blockquote>
+<h4 id="六、条件信号量dispatch-semaphore-t"><a href="#六、条件信号量dispatch-semaphore-t" class="headerlink" title="六、条件信号量dispatch_semaphore_t"></a>六、条件信号量dispatch_semaphore_t</h4><blockquote>
+<p><code>dispatch_semaphore_t</code>:GCD中信号量，也可以解决资源抢占问题,支持信号通知和信号等待。每当发送一个信号通知，则信号量+1；每当发送一个等待信号时信号量-1,；如果信号量为0则信号会处于等待状态，直到信号量大于0开始执行。</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#import <span class="meta-string">"MYDispatchSemaphoreViewController.h"</span></span></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">MYDispatchSemaphoreViewController</span> ()</span></div><div class="line">&#123;</div><div class="line">    dispatch_semaphore_t semaphore;</div><div class="line">&#125;</div><div class="line"><span class="keyword">@end</span></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">MYDispatchSemaphoreViewController</span></span></div><div class="line">- (<span class="keyword">void</span>)viewDidLoad &#123;</div><div class="line">    [<span class="keyword">super</span> viewDidLoad];</div><div class="line">    <span class="comment">// Do any additional setup after loading the view.</span></div><div class="line">    <span class="comment">/**</span></div><div class="line">     *  创建一个信号量为1的信号</div><div class="line">     *</div><div class="line">     */</div><div class="line">    semaphore = dispatch_semaphore_create(<span class="number">1</span>);</div><div class="line">   &#125;</div><div class="line">- (<span class="keyword">void</span>)getIamgeName:(<span class="built_in">NSMutableArray</span> *)imageNames&#123;</div><div class="line">    <span class="built_in">NSString</span> *imageName;</div><div class="line">    <span class="comment">/**</span></div><div class="line">     *  semaphore：等待信号</div><div class="line">     DISPATCH_TIME_FOREVER：等待时间</div><div class="line">     wait之后信号量-1，为0</div><div class="line">     */</div><div class="line">    dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);</div><div class="line">    <span class="keyword">if</span> (imageNames.count&gt;<span class="number">0</span>) &#123;</div><div class="line">        imageName = [imageNames lastObject];</div><div class="line">        [imageNames removeObject:imageName];</div><div class="line">    &#125;</div><div class="line">    <span class="comment">/**</span></div><div class="line">     *  发送一个信号通知，这时候信号量+1，为1</div><div class="line">     */</div><div class="line">    dispatch_semaphore_signal(semaphore);</div><div class="line">&#125;</div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure></blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/19/面试题二/" rel="next" title="面试题二">
+                <i class="fa fa-chevron-left"></i> 面试题二
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/10/20/简单的数据加密/" rel="prev" title="简单的数据加密">
+                简单的数据加密 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments"></div>
+    
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='/lib/Valine.min.js'></script>
+    <script>
+        new Valine({
+            av: AV,
+            el: '.comments' ,
+            verify: true,
+            app_id: 'QOVnk3YjdW9xkwvrI6zUvQ9B-gzGzoHsz',
+            app_key: 'qQFkxfC0d1DeinWAf6e3gm11',
+            placeholder: 'ヾﾉ≧∀≦)o来啊，快活啊!'
+        });
+    </script>
+    
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://oui2ar2u7.bkt.clouddn.com/Roronoa_Zoro.png"
+               alt="Kerwin" />
+          <p class="site-author-name" itemprop="name">Kerwin</p>
+           
+              <p class="site-description motion-element" itemprop="description">iOS 学习总结 思考感悟 知识管理</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">27</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#在iOS中有几种方法来解决多线程访问同一个内存地址的互斥同步问题："><span class="nav-number">1.</span> <span class="nav-text">在iOS中有几种方法来解决多线程访问同一个内存地址的互斥同步问题：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#一、-synchronized-id-anObject-最简单的方法"><span class="nav-number">1.1.</span> <span class="nav-text">一、@synchronized(id anObject),(最简单的方法)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二、NSLock"><span class="nav-number">1.2.</span> <span class="nav-text">二、NSLock</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#三、NSRecursiveLock，递归锁"><span class="nav-number">1.3.</span> <span class="nav-text">三、NSRecursiveLock，递归锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#四、NSConditionLock，条件锁"><span class="nav-number">1.4.</span> <span class="nav-text">四、NSConditionLock，条件锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#五、NSDistributedLock，分布锁"><span class="nav-number">1.5.</span> <span class="nav-text">五、NSDistributedLock，分布锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#六、条件信号量dispatch-semaphore-t"><span class="nav-number">1.6.</span> <span class="nav-text">六、条件信号量dispatch_semaphore_t</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Kerwin</span>
+</div>
+
+
+<div class="powered-by">
+   个人专属
+</div>
+
+<div class="theme-info">
+  博客 - Kerwin
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("QOVnk3YjdW9xkwvrI6zUvQ9B-gzGzoHsz", "qQFkxfC0d1DeinWAf6e3gm11");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

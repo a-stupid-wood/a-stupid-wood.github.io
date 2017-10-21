@@ -89,17 +89,17 @@
 
 
 
-<meta name="description" content="1、匹配数字12345678// 1.不能以0开头    // 2.全部是数字    // 3.5-11位    return [self match:@&quot;^[1-9]\\d&amp;#123;4,10&amp;#125;$”];   // 1.创建正则表达式    NSRegularExpression *regex = [[NSRegularExpression alloc] initWithPattern:">
+<meta name="description" content="简单的数据加密.H   1234567891011121314#import &amp;lt;Foundation/Foundation.h&amp;gt;@interface NSString (Hash)@property (readonly) NSString *md5String;@property (readonly) NSString *sha1String;@property (readonly)">
 <meta property="og:type" content="article">
-<meta property="og:title" content="正则表达式">
-<meta property="og:url" content="http://yoursite.com/2017/07/12/正则表达式/index.html">
+<meta property="og:title" content="简单的数据加密">
+<meta property="og:url" content="http://yoursite.com/2017/10/20/简单的数据加密/index.html">
 <meta property="og:site_name" content="Kerwin">
-<meta property="og:description" content="1、匹配数字12345678// 1.不能以0开头    // 2.全部是数字    // 3.5-11位    return [self match:@&quot;^[1-9]\\d&amp;#123;4,10&amp;#125;$”];   // 1.创建正则表达式    NSRegularExpression *regex = [[NSRegularExpression alloc] initWithPattern:">
+<meta property="og:description" content="简单的数据加密.H   1234567891011121314#import &amp;lt;Foundation/Foundation.h&amp;gt;@interface NSString (Hash)@property (readonly) NSString *md5String;@property (readonly) NSString *sha1String;@property (readonly)">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-07-12T11:54:40.000Z">
+<meta property="og:updated_time" content="2017-10-20T14:14:10.609Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="正则表达式">
-<meta name="twitter:description" content="1、匹配数字12345678// 1.不能以0开头    // 2.全部是数字    // 3.5-11位    return [self match:@&quot;^[1-9]\\d&amp;#123;4,10&amp;#125;$”];   // 1.创建正则表达式    NSRegularExpression *regex = [[NSRegularExpression alloc] initWithPattern:">
+<meta name="twitter:title" content="简单的数据加密">
+<meta name="twitter:description" content="简单的数据加密.H   1234567891011121314#import &amp;lt;Foundation/Foundation.h&amp;gt;@interface NSString (Hash)@property (readonly) NSString *md5String;@property (readonly) NSString *sha1String;@property (readonly)">
 
 
 
@@ -127,13 +127,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/07/12/正则表达式/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/10/20/简单的数据加密/"/>
 
 
 
 
 
-  <title> 正则表达式 | Kerwin </title>
+  <title> 简单的数据加密 | Kerwin </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -262,7 +262,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/12/正则表达式/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/20/简单的数据加密/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Kerwin">
@@ -283,7 +283,7 @@
             
             
               
-                正则表达式
+                简单的数据加密
               
             
           </h1>
@@ -298,8 +298,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-12T19:52:19+08:00">
-                2017-07-12
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-20T22:09:41+08:00">
+                2017-10-20
               </time>
             
 
@@ -316,7 +316,7 @@
 
           
           
-             <span id="/2017/07/12/正则表达式/" class="leancloud_visitors" data-flag-title="正则表达式">
+             <span id="/2017/10/20/简单的数据加密/" class="leancloud_visitors" data-flag-title="简单的数据加密">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -345,9 +345,10 @@
       
 
       
-        <h4 id="1、匹配数字"><a href="#1、匹配数字" class="headerlink" title="1、匹配数字"></a>1、匹配数字</h4><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">// 1.不能以0开头</div><div class="line">    // 2.全部是数字</div><div class="line">    // 3.5-11位</div><div class="line">    return [self match:@"^[1-9]\\d&#123;4,10&#125;$”];</div><div class="line">   // 1.创建正则表达式</div><div class="line">    NSRegularExpression *regex = [[NSRegularExpression alloc] initWithPattern:pattern options:0 error:nil];</div><div class="line">    // 2.测试字符串</div><div class="line">    NSArray *results = [regex matchesInString:self options:0 range:NSMakeRange(0, self.length)];</div></pre></td></tr></table></figure>
-<h4 id="2、-匹配多个条件，相当于or-或"><a href="#2、-匹配多个条件，相当于or-或" class="headerlink" title="2、| 匹配多个条件，相当于or\或"></a>2、| 匹配多个条件，相当于or\或</h4><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 表情的规则</span></div><div class="line">    <span class="built_in">NSString</span> *emotionPattern = <span class="string">@"\\[[0-9a-zA-Z\\u4e00-\\u9fa5]+\\]"</span>;</div><div class="line">    </div><div class="line">    <span class="comment">// @的规则</span></div><div class="line">    <span class="built_in">NSString</span> *atPattern = <span class="string">@"@[0-9a-zA-Z\\u4e00-\\u9fa5]+"</span>;</div><div class="line">    </div><div class="line">    <span class="comment">// #话题#的规则</span></div><div class="line">    <span class="built_in">NSString</span> *topicPattern = <span class="string">@"#[0-9a-zA-Z\\u4e00-\\u9fa5]+#"</span>;</div><div class="line">    </div><div class="line">    <span class="comment">// url链接的规则</span></div><div class="line">    <span class="built_in">NSString</span> *urlPattern = <span class="string">@"\\b(([\\w-]+://?|www[.])[^\\s()&lt;&gt;]+(?:\\([\\w\\d]+\\)|([^[:punct:]\\s]|/)))"</span>;</div><div class="line">    </div><div class="line">    <span class="comment">// | 匹配多个条件,相当于or\或</span></div><div class="line">    <span class="built_in">NSString</span> *pattern = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"%@|%@|%@|%@"</span>, emotionPattern, atPattern, topicPattern, urlPattern];</div><div class="line">    </div><div class="line">    <span class="built_in">NSRegularExpression</span> *regex = [[<span class="built_in">NSRegularExpression</span> alloc] initWithPattern:pattern options:<span class="number">0</span> error:<span class="literal">nil</span>];</div><div class="line">    <span class="comment">// 2.测试字符串</span></div><div class="line">    <span class="built_in">NSArray</span> *results = [regex matchesInString:str options:<span class="number">0</span> range:<span class="built_in">NSMakeRange</span>(<span class="number">0</span>, str.length)];</div><div class="line">    </div><div class="line">    <span class="comment">// 3.遍历结果</span></div><div class="line">    <span class="keyword">for</span> (<span class="built_in">NSTextCheckingResult</span> *result <span class="keyword">in</span> results) &#123;</div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"%@ %@"</span>, <span class="built_in">NSStringFromRange</span>(result.range), [str substringWithRange:result.range]);</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
-
+        <h4 id="简单的数据加密"><a href="#简单的数据加密" class="headerlink" title="简单的数据加密"></a>简单的数据加密</h4><p>.H  </p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#import <span class="meta-string">&lt;Foundation/Foundation.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">NSString</span> (<span class="title">Hash</span>)</span></div><div class="line"></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">readonly</span>) <span class="built_in">NSString</span> *md5String;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">readonly</span>) <span class="built_in">NSString</span> *sha1String;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">readonly</span>) <span class="built_in">NSString</span> *sha256String;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">readonly</span>) <span class="built_in">NSString</span> *sha512String;</div><div class="line"></div><div class="line">- (<span class="built_in">NSString</span> *)hmacSHA1StringWithKey:(<span class="built_in">NSString</span> *)key;</div><div class="line">- (<span class="built_in">NSString</span> *)hmacSHA256StringWithKey:(<span class="built_in">NSString</span> *)key;</div><div class="line">- (<span class="built_in">NSString</span> *)hmacSHA512StringWithKey:(<span class="built_in">NSString</span> *)key;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<p>.M</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#import <span class="meta-string">"NSString+hash.h"</span></span></div><div class="line"></div><div class="line"><span class="meta">#import <span class="meta-string">&lt;CommonCrypto/CommonDigest.h&gt;</span></span></div><div class="line"><span class="meta">#import <span class="meta-string">&lt;CommonCrypto/CommonHMAC.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">NSString</span> (<span class="title">Hash</span>)</span></div><div class="line"></div><div class="line">- (<span class="built_in">NSString</span> *)md5String</div><div class="line">&#123;</div><div class="line">	<span class="keyword">const</span> <span class="keyword">char</span> *string = <span class="keyword">self</span>.UTF8String;</div><div class="line">	<span class="keyword">int</span> length = (<span class="keyword">int</span>)strlen(string);</div><div class="line">	<span class="keyword">unsigned</span> <span class="keyword">char</span> bytes[CC_MD5_DIGEST_LENGTH];</div><div class="line">	CC_MD5(string, length, bytes);</div><div class="line">	<span class="keyword">return</span> [<span class="keyword">self</span> stringFromBytes:bytes length:CC_MD5_DIGEST_LENGTH];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="built_in">NSString</span> *)sha1String</div><div class="line">&#123;</div><div class="line">	<span class="keyword">const</span> <span class="keyword">char</span> *string = <span class="keyword">self</span>.UTF8String;</div><div class="line">	<span class="keyword">int</span> length = (<span class="keyword">int</span>)strlen(string);</div><div class="line">	<span class="keyword">unsigned</span> <span class="keyword">char</span> bytes[CC_SHA1_DIGEST_LENGTH];</div><div class="line">	CC_SHA1(string, length, bytes);</div><div class="line">	<span class="keyword">return</span> [<span class="keyword">self</span> stringFromBytes:bytes length:CC_SHA1_DIGEST_LENGTH];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="built_in">NSString</span> *)sha256String</div><div class="line">&#123;</div><div class="line">	<span class="keyword">const</span> <span class="keyword">char</span> *string = <span class="keyword">self</span>.UTF8String;</div><div class="line">	<span class="keyword">int</span> length = (<span class="keyword">int</span>)strlen(string);</div><div class="line">	<span class="keyword">unsigned</span> <span class="keyword">char</span> bytes[CC_SHA256_DIGEST_LENGTH];</div><div class="line">	CC_SHA256(string, length, bytes);</div><div class="line">	<span class="keyword">return</span> [<span class="keyword">self</span> stringFromBytes:bytes length:CC_SHA256_DIGEST_LENGTH];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="built_in">NSString</span> *)sha512String</div><div class="line">&#123;</div><div class="line">	<span class="keyword">const</span> <span class="keyword">char</span> *string = <span class="keyword">self</span>.UTF8String;</div><div class="line">	<span class="keyword">int</span> length = (<span class="keyword">int</span>)strlen(string);</div><div class="line">	<span class="keyword">unsigned</span> <span class="keyword">char</span> bytes[CC_SHA512_DIGEST_LENGTH];</div><div class="line">	CC_SHA512(string, length, bytes);</div><div class="line">	<span class="keyword">return</span> [<span class="keyword">self</span> stringFromBytes:bytes length:CC_SHA512_DIGEST_LENGTH];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="built_in">NSString</span> *)hmacSHA1StringWithKey:(<span class="built_in">NSString</span> *)key</div><div class="line">&#123;</div><div class="line">	<span class="built_in">NSData</span> *keyData = [key dataUsingEncoding:<span class="built_in">NSUTF8StringEncoding</span>];</div><div class="line">	<span class="built_in">NSData</span> *messageData = [<span class="keyword">self</span> dataUsingEncoding:<span class="built_in">NSUTF8StringEncoding</span>];</div><div class="line">	<span class="built_in">NSMutableData</span> *mutableData = [<span class="built_in">NSMutableData</span> dataWithLength:CC_SHA1_DIGEST_LENGTH];</div><div class="line">	CCHmac(kCCHmacAlgSHA1, keyData.bytes, keyData.length, messageData.bytes, messageData.length, mutableData.mutableBytes);</div><div class="line">	<span class="keyword">return</span> [<span class="keyword">self</span> stringFromBytes:(<span class="keyword">unsigned</span> <span class="keyword">char</span> *)mutableData.bytes length:mutableData.length];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="built_in">NSString</span> *)hmacSHA256StringWithKey:(<span class="built_in">NSString</span> *)key</div><div class="line">&#123;</div><div class="line">	<span class="built_in">NSData</span> *keyData = [key dataUsingEncoding:<span class="built_in">NSUTF8StringEncoding</span>];</div><div class="line">	<span class="built_in">NSData</span> *messageData = [<span class="keyword">self</span> dataUsingEncoding:<span class="built_in">NSUTF8StringEncoding</span>];</div><div class="line">	<span class="built_in">NSMutableData</span> *mutableData = [<span class="built_in">NSMutableData</span> dataWithLength:CC_SHA256_DIGEST_LENGTH];</div><div class="line">	CCHmac(kCCHmacAlgSHA256, keyData.bytes, keyData.length, messageData.bytes, messageData.length, mutableData.mutableBytes);</div><div class="line">	<span class="keyword">return</span> [<span class="keyword">self</span> stringFromBytes:(<span class="keyword">unsigned</span> <span class="keyword">char</span> *)mutableData.bytes length:mutableData.length];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="built_in">NSString</span> *)hmacSHA512StringWithKey:(<span class="built_in">NSString</span> *)key</div><div class="line">&#123;</div><div class="line">	<span class="built_in">NSData</span> *keyData = [key dataUsingEncoding:<span class="built_in">NSUTF8StringEncoding</span>];</div><div class="line">	<span class="built_in">NSData</span> *messageData = [<span class="keyword">self</span> dataUsingEncoding:<span class="built_in">NSUTF8StringEncoding</span>];</div><div class="line">	<span class="built_in">NSMutableData</span> *mutableData = [<span class="built_in">NSMutableData</span> dataWithLength:CC_SHA512_DIGEST_LENGTH];</div><div class="line">	CCHmac(kCCHmacAlgSHA512, keyData.bytes, keyData.length, messageData.bytes, messageData.length, mutableData.mutableBytes);</div><div class="line">	<span class="keyword">return</span> [<span class="keyword">self</span> stringFromBytes:(<span class="keyword">unsigned</span> <span class="keyword">char</span> *)mutableData.bytes length:mutableData.length];</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">#pragma mark - Helpers</span></div><div class="line"></div><div class="line">- (<span class="built_in">NSString</span> *)stringFromBytes:(<span class="keyword">unsigned</span> <span class="keyword">char</span> *)bytes length:(<span class="keyword">int</span>)length</div><div class="line">&#123;</div><div class="line">	<span class="built_in">NSMutableString</span> *mutableString = <span class="string">@""</span>.mutableCopy;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; length; i++)</div><div class="line">		[mutableString appendFormat:<span class="string">@"%02x"</span>, bytes[i]];</div><div class="line">	<span class="keyword">return</span> [<span class="built_in">NSString</span> stringWithString:mutableString];</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
       
     </div>
 
@@ -383,8 +384,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/07/12/添加3DTouch/" rel="next" title="添加3DTouch">
-                <i class="fa fa-chevron-left"></i> 添加3DTouch
+              <a href="/2017/10/20/多线程互斥锁/" rel="next" title="多线程互斥锁">
+                <i class="fa fa-chevron-left"></i> 多线程互斥锁
               </a>
             
           </div>
@@ -393,8 +394,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/07/12/距离传感器、加速计和蓝牙/" rel="prev" title="距离传感器、加速计和蓝牙">
-                距离传感器、加速计和蓝牙 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/10/20/面试逻辑题/" rel="prev" title="面试逻辑题">
+                面试逻辑题 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -524,7 +525,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、匹配数字"><span class="nav-number">1.</span> <span class="nav-text">1、匹配数字</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、-匹配多个条件，相当于or-或"><span class="nav-number">2.</span> <span class="nav-text">2、| 匹配多个条件，相当于or\或</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#简单的数据加密"><span class="nav-number">1.</span> <span class="nav-text">简单的数据加密</span></a></li></ol></div>
             
 
           </div>
