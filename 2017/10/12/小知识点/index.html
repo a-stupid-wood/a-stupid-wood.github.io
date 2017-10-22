@@ -99,7 +99,7 @@
 <meta property="og:image" content="http://oui2ar2u7.bkt.clouddn.com/83bbf18dgw1dx3236wmnnj.jpg">
 <meta property="og:image" content="http://oui2ar2u7.bkt.clouddn.com/83bbf18dgw1dx3237dsbxj.jpg">
 <meta property="og:image" content="http://oui2ar2u7.bkt.clouddn.com/83bbf18dgw1dx32384ardj.jpg">
-<meta property="og:updated_time" content="2017-10-12T13:30:46.551Z">
+<meta property="og:updated_time" content="2017-10-21T14:31:57.802Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="小知识点">
 <meta name="twitter:description" content="1、在由NSString生成NSURL对象时，有可能会出现NSString中包含百分号各类括号冒号等对于url来说的非法字符如果直接进行转换的话将得到nil。在对于复杂url进行转换前，可以先试试对待转换的NSString发送 stringByAddingPercentEscapesUsingEncoding: 将其转换为合法的url字符串（其实目的就是保证非法字符用UTF8编码..） 比如这样：">
@@ -380,6 +380,24 @@
 <p>具体可以看<a href="https://onevcat.com/2012/09/autoayout/" target="_blank" rel="external">喵神的AutoLayout（自动布局）入门</a></p>
 <p>3、iOS 11实现左长滑删除cell </p>
 <figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//实现代理方法</span></div><div class="line">- (<span class="built_in">UISwipeActionsConfiguration</span> *)tableView:(<span class="built_in">UITableView</span> *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(<span class="built_in">NSIndexPath</span> *)indexPath</div><div class="line">&#123;</div><div class="line">    <span class="comment">//删除</span></div><div class="line">    <span class="built_in">UIContextualAction</span> * deleteRowAction = [<span class="built_in">UIContextualAction</span> contextualActionWithStyle:<span class="built_in">UIContextualActionStyleDestructive</span> title:<span class="string">@"delete"</span> handler:^(<span class="built_in">UIContextualAction</span> * _Nonnull action, __kindof <span class="built_in">UIView</span> * _Nonnull sourceView, <span class="keyword">void</span> (^ _Nonnull completionHandler)(<span class="built_in">BOOL</span>)) &#123;</div><div class="line">        completionHandler(<span class="literal">YES</span>);</div><div class="line">    &#125;];</div><div class="line">    deleteRowAction.backgroundColor = [<span class="built_in">UIColor</span> blueColor];</div><div class="line">    </div><div class="line">    <span class="keyword">return</span> [<span class="built_in">UISwipeActionsConfiguration</span> configurationWithActions:@[deleteRowAction]];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>4.判断编译器的环境：ARC还是MRC？</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#if __has_feature(objc_arc)</span></div><div class="line"><span class="comment">// 当前的编译器环境是ARC</span></div><div class="line"></div><div class="line"><span class="meta">#else</span></div><div class="line"><span class="comment">// 当前的编译器环境是MRC</span></div><div class="line"></div><div class="line"><span class="meta">#endif</span></div></pre></td></tr></table></figure>
+<p>5.类的初始化方法</p>
+<blockquote>
+<p>1.+(void)load  </p>
+<ul>
+<li>当某个类第一次装载到OC运行时系统（内存）时，就会调用</li>
+<li>程序一启动就会调用</li>
+<li>程序运行过程中，只会调用1次</li>
+</ul>
+<p>2.+(void)initialize  </p>
+<ul>
+<li>当某个类第一次被使用时（比如调用了类的某个方法），就会调用</li>
+<li>并非程序一启动就会调用</li>
+</ul>
+<p>3.在程序运行过程中：1个类中的某个操作，只想执行1次，那么这个操作放到+(void)load方法中最合适</p>
+</blockquote>
+
       
     </div>
 
@@ -501,7 +519,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">27</span>
+                <span class="site-state-item-count">32</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
