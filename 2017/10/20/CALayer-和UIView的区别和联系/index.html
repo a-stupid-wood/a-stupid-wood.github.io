@@ -89,17 +89,17 @@
 
 
 
-<meta name="description" content="CALayer 和UIView的区别和联系  每个 UIView 内部都有一个 CALayer 在背后提供内容的绘制和显示，并且 UIView 的尺寸样式都由内部的 Layer 所提供。两者都有树状层级结构，layer 内部有 SubLayers，View 内部有 SubViews.但是 Layer 比 View 多了个AnchorPoint 每个 UIView 内部都有一个 CALayer 在背">
+<meta name="description" content="CALayer 和UIView的区别和联系  每个 UIView 内部都有一个 CALayer 在背后提供内容的绘制和显示，并且 UIView 的尺寸样式都由内部的 Layer 所提供。两者都有树状层级结构，layer 内部有 SubLayers，View 内部有 SubViews.但是 Layer 比 View 多了个AnchorPoint CALayer 是默认修改属性支持隐式动画的，在给 U">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CALayer 和UIView的区别和联系">
 <meta property="og:url" content="http://yoursite.com/2017/10/20/CALayer-和UIView的区别和联系/index.html">
 <meta property="og:site_name" content="Kerwin">
-<meta property="og:description" content="CALayer 和UIView的区别和联系  每个 UIView 内部都有一个 CALayer 在背后提供内容的绘制和显示，并且 UIView 的尺寸样式都由内部的 Layer 所提供。两者都有树状层级结构，layer 内部有 SubLayers，View 内部有 SubViews.但是 Layer 比 View 多了个AnchorPoint 每个 UIView 内部都有一个 CALayer 在背">
+<meta property="og:description" content="CALayer 和UIView的区别和联系  每个 UIView 内部都有一个 CALayer 在背后提供内容的绘制和显示，并且 UIView 的尺寸样式都由内部的 Layer 所提供。两者都有树状层级结构，layer 内部有 SubLayers，View 内部有 SubViews.但是 Layer 比 View 多了个AnchorPoint CALayer 是默认修改属性支持隐式动画的，在给 U">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-10-20T14:17:32.351Z">
+<meta property="og:updated_time" content="2017-11-12T13:24:05.091Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CALayer 和UIView的区别和联系">
-<meta name="twitter:description" content="CALayer 和UIView的区别和联系  每个 UIView 内部都有一个 CALayer 在背后提供内容的绘制和显示，并且 UIView 的尺寸样式都由内部的 Layer 所提供。两者都有树状层级结构，layer 内部有 SubLayers，View 内部有 SubViews.但是 Layer 比 View 多了个AnchorPoint 每个 UIView 内部都有一个 CALayer 在背">
+<meta name="twitter:description" content="CALayer 和UIView的区别和联系  每个 UIView 内部都有一个 CALayer 在背后提供内容的绘制和显示，并且 UIView 的尺寸样式都由内部的 Layer 所提供。两者都有树状层级结构，layer 内部有 SubLayers，View 内部有 SubViews.但是 Layer 比 View 多了个AnchorPoint CALayer 是默认修改属性支持隐式动画的，在给 U">
 
 
 
@@ -347,7 +347,6 @@
       
         <h4 id="CALayer-和UIView的区别和联系"><a href="#CALayer-和UIView的区别和联系" class="headerlink" title="CALayer 和UIView的区别和联系"></a>CALayer 和UIView的区别和联系</h4><blockquote>
 <ul>
-<li>每个 UIView 内部都有一个 CALayer 在背后提供内容的绘制和显示，并且 UIView 的尺寸样式都由内部的 Layer 所提供。两者都有树状层级结构，layer 内部有 SubLayers，View 内部有 SubViews.但是 Layer 比 View 多了个AnchorPoint</li>
 <li>每个 UIView 内部都有一个 CALayer 在背后提供内容的绘制和显示，并且 UIView 的尺寸样式都由内部的 Layer 所提供。两者都有树状层级结构，layer 内部有 SubLayers，View 内部有 SubViews.但是 Layer 比 View 多了个AnchorPoint</li>
 <li>CALayer 是默认修改属性支持隐式动画的，在给 UIView 的 Layer 做动画的时候，View 作为 Layer 的代理，Layer 通过 actionForLayer:forKey:向 View请求相应的 action(动画行为)</li>
 <li>layer 内部维护着三分 layer tree,分别是 presentLayer Tree(动画树),modeLayer Tree(模型树), Render Tree (渲染树),在做 iOS动画的时候，我们修改动画的属性，在动画的其实是 Layer 的 presentLayer的属性值,而最终展示在界面上的其实是提供 View的modelLayer</li>

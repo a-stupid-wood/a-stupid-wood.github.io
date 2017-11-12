@@ -4,6 +4,36 @@
 
     
   <url>
+    <loc>http://yoursite.com/2017/10/20/CALayer-%E5%92%8CUIView%E7%9A%84%E5%8C%BA%E5%88%AB%E5%92%8C%E8%81%94%E7%B3%BB/</loc>
+    <lastmod>2017-11-12T13:24:05.091Z</lastmod>
+    <data>
+        <display>
+        <title>CALayer 和UIView的区别和联系</title>
+        <pubTime>2017-10-20T14:11:46.000Z</pubTime>
+        
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://yoursite.com/2017/10/20/%E9%9D%A2%E8%AF%95%E9%80%BB%E8%BE%91%E9%A2%98/</loc>
+    <lastmod>2017-11-12T13:23:41.557Z</lastmod>
+    <data>
+        <display>
+        <title>面试逻辑题</title>
+        <pubTime>2017-10-20T14:10:02.000Z</pubTime>
+        
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://yoursite.com/2017/10/19/%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B8%80/</loc>
     <lastmod>2017-10-24T04:17:02.482Z</lastmod>
     <data>
@@ -229,42 +259,12 @@
 
     
   <url>
-    <loc>http://yoursite.com/2017/10/20/%E9%9D%A2%E8%AF%95%E9%80%BB%E8%BE%91%E9%A2%98/</loc>
-    <lastmod>2017-10-20T15:14:18.505Z</lastmod>
-    <data>
-        <display>
-        <title>面试逻辑题</title>
-        <pubTime>2017-10-20T14:10:02.000Z</pubTime>
-        
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>http://yoursite.com/2017/10/20/KVO%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/</loc>
     <lastmod>2017-10-20T14:18:31.916Z</lastmod>
     <data>
         <display>
         <title>KVO的实现原理</title>
         <pubTime>2017-10-20T14:12:17.000Z</pubTime>
-        
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://yoursite.com/2017/10/20/CALayer-%E5%92%8CUIView%E7%9A%84%E5%8C%BA%E5%88%AB%E5%92%8C%E8%81%94%E7%B3%BB/</loc>
-    <lastmod>2017-10-20T14:17:32.351Z</lastmod>
-    <data>
-        <display>
-        <title>CALayer 和UIView的区别和联系</title>
-        <pubTime>2017-10-20T14:11:46.000Z</pubTime>
         
          
            
